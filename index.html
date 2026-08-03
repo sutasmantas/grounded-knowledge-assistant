@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A working RAG workbench with hybrid retrieval, reranking, evidence inspection and evaluation."
+    />
+    <title>Atlas — Retrieval Workbench</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="global-header">
+        <a class="brand" href="/" aria-label="Atlas home">
+          <span class="brand-mark">A</span>
+          <span><strong>Atlas</strong><small>Retrieval workbench</small></span>
+        </a>
+        <nav class="primary-nav" aria-label="Workspace">
+          <button class="nav-item active" data-view="chat">Research</button>
+          <button class="nav-item" data-view="library">
+            Sources <span class="nav-count" id="nav-document-count">0</span>
+          </button>
+        </nav>
+        <div class="workspace-health">
+          <span class="health-dot"></span>
+          <span><strong id="health-label">Connecting</strong><small id="provider-label">Checking providers…</small></span>
+        </div>
+        <a class="header-link" href="/docs" target="_blank" rel="noreferrer">API reference ↗</a>
+      </header>
+
+      <section class="workspace">
+        <header class="topbar">
+          <div>
+            <span class="eyebrow">Northstar policy workspace / local sample</span>
+            <h1 id="view-title">Research company knowledge</h1>
+          </div>
+          <div class="index-summary">
+            <span><strong id="sidebar-document-count">0 documents</strong><small>active index</small></span>
+            <span class="index-status">Index healthy</span>
+          </div>
+        </header>
+
+        <section class="chat-view" id="chat-view">
+          <aside class="question-panel">
+            <section class="panel-section">
+              <div class="section-heading">
+                <span class="eyebrow">Brief</span>
+                <span class="section-number">01</span>
+              </div>
+              <h2>Start with a real policy question</h2>
+              <p class="section-copy">Use a prepared case, or write your own query in the research canvas.</p>
+
+              <button class="question-card" data-question="cancel">
+                <span class="question-index">A</span>
+                <span><strong>Contract cancellation</strong><small>Terms, notice and approvals</small></span>
+              </button>
+              <button class="question-card" data-question="security">
+                <span class="question-index">B</span>
+                <span><strong>Security incident remedy</strong><small>Cross-policy reasoning</small></span>
+              </button>
+              <button class="question-card" data-question="refund">
+                <span class="question-index">C</span>
+                <span><strong>Annual plan refund</strong><small>Eligibility and routing</small></span>
+              </button>
+            </section>
+
+            <section class="panel-section retrieval-config">
+              <div class="section-heading">
+                <span class="eyebrow">Retrieval setup</span>
+                <span class="section-number">02</span>
+              </div>
+              <label class="field-label" for="retrieval-profile">Search profile</label>
+              <select id="retrieval-profile">
+                <option value="sparse">Sparse lexical · measured baseline</option>
+                <option value="hybrid">Hybrid · dense + lexical</option>
+                <option value="hybrid-reranked">Hybrid + late reranking</option>
+                <option value="dense">Dense baseline</option>
+              </select>
+              <p class="field-help">Profiles run against the same index and expose their trace after each query.</p>
+            </section>
+
+            <section class="panel-section scope-section">
+              <div class="section-heading">
+                <span class="eyebrow">Search scope</span>
+                <span class="section-number" id="selected-collection-count">4 active</span>
+              </div>
+              <div class="collection-list">
+                <button class="collection active" data-collection="Customer contracts"><i class="dot violet"></i> Customer contracts</button>
+                <button class="collection active" data-collection="Billing & renewals"><i class="dot blue"></i> Billing &amp; renewals</button>
+                <button class="collection active" data-collection="Security & compliance"><i class="dot orange"></i> Security &amp; compliance</button>
+                <button class="collection active" data-collection="People operations"><i class="dot green"></i> People operations</button>
+              </div>
+              <p class="field-help" id="scope-label">4 collections selected</p>
+            </section>
+          </aside>
+
+          <section class="answer-panel">
+            <header class="canvas-header">
+              <div>
+                <span class="canvas-kicker">Research canvas</span>
+                <strong>Grounded answer</strong>
+              </div>
+              <div class="canvas-meta">
+                <span id="answer-meta">Ready for a question</span>
+                <button id="copy-answer" aria-label="Copy answer" disabled>Copy</button>
+              </div>
+            </header>
+
+            <div class="answer-scroll">
+              <div class="question-label">Question</div>
+              <div class="user-question empty-question" id="user-question">
+                Select a prepared case or ask about the indexed documents.
+              </div>
+
+              <div class="retrieval-state" id="retrieval-state" hidden>
+                <div class="scan-line"></div>
+                <strong>Running retrieval pipeline</strong>
+                <small>Dense search, lexical search and evidence ranking are executing.</small>
+              </div>
+
+              <div class="answer-label">Atlas response</div>
+              <article class="answer empty-state" id="answer">
+                <strong>No answer yet</strong>
+                <p>The answer and every supporting passage will remain visible in one review surface.</p>
+              </article>
+              <div class="request-error" id="request-error" hidden></div>
+            </div>
+
+            <div class="composer">
+              <textarea id="question-input" rows="2" placeholder="Ask a question across the selected collections…"></textarea>
+              <div class="composer-actions">
+                <button class="quiet-button" id="composer-upload" aria-label="Add document">Add source</button>
+                <span class="scope-chip"><i></i> Evidence required</span>
+                <button class="send-button" id="send-question">Run query <span>→</span></button>
+              </div>
+            </div>
+          </section>
+
+          <aside class="evidence-panel">
+            <header class="evidence-header">
+              <div><span class="eyebrow">Evidence ledger</span><h2>Retrieved passages</h2></div>
+              <span class="coverage" id="coverage-label">0 sources</span>
+            </header>
+
+            <div class="source-cards" id="source-cards">
+              <div class="source-empty">Run a query to inspect the evidence set.</div>
+            </div>
+
+            <section class="trace-card">
+              <div class="trace-title">
+                <div><span class="eyebrow">Execution trace</span><strong id="retrieval-status">Waiting</strong></div>
+                <span class="trace-pulse"></span>
+              </div>
+              <div class="trace-grid">
+                <div><span>Profile</span><strong id="trace-profile">—</strong></div>
+                <div><span>Fusion</span><strong id="fusion-mode">—</strong></div>
+                <div><span>Candidates</span><strong id="candidates-count">—</strong></div>
+                <div><span>Passages</span><strong id="source-count">0</strong></div>
+                <div><span>Retrieve</span><strong id="retrieval-latency">—</strong></div>
+                <div><span>Rerank</span><strong id="rerank-latency">—</strong></div>
+                <div><span>Generator</span><strong id="generation-mode">—</strong></div>
+                <div><span>Total</span><strong id="latency-value">—</strong></div>
+              </div>
+            </section>
+
+            <section class="passage-card" id="passage-card" hidden>
+              <div class="passage-head">
+                <span>Selected passage</span>
+                <strong id="passage-title"></strong>
+              </div>
+              <blockquote id="passage-text"></blockquote>
+              <div class="passage-footer"><span id="passage-collection"></span><span class="verified-pill">Indexed source</span></div>
+            </section>
+          </aside>
+        </section>
+
+        <section class="library-view" id="library-view" hidden>
+          <div class="library-toolbar">
+            <div>
+              <span class="eyebrow">Index administration</span>
+              <h2>Source library</h2>
+              <p>Upload approved material, inspect its chunk count and remove it from the local index.</p>
+            </div>
+            <div class="library-actions">
+              <label class="upload-collection">
+                <span>Add to</span>
+                <select id="upload-collection" aria-label="Upload collection">
+                  <option>Customer contracts</option>
+                  <option>Billing &amp; renewals</option>
+                  <option>Security &amp; compliance</option>
+                  <option>People operations</option>
+                </select>
+              </label>
+              <button class="primary-button" id="add-document">Add document</button>
+              <input id="document-upload" type="file" accept=".pdf,.md,.txt" hidden />
+            </div>
+          </div>
+
+          <div class="library-stats">
+            <div><span class="stat-label">Documents</span><strong id="document-count">0</strong><small>indexed sources</small></div>
+            <div><span class="stat-label">Chunks</span><strong id="chunk-count">0</strong><small>searchable units</small></div>
+            <div><span class="stat-label">Embeddings</span><strong id="embedding-label">—</strong><small>active provider</small></div>
+            <div><span class="stat-label">Generation</span><strong id="generation-label">—</strong><small>answer provider</small></div>
+          </div>
+
+          <section class="documents-card">
+            <div class="documents-head">
+              <label class="search-box">Search <input id="document-search" type="search" placeholder="Title, file or collection" /></label>
+            </div>
+            <div class="table-head document-row">
+              <span>Document</span><span>Collection</span><span>Chunks</span><span>Added</span><span>Status</span><span></span>
+            </div>
+            <div id="document-list"><div class="document-empty">Loading indexed documents…</div></div>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <div class="toast" id="toast">
+      <span>✓</span>
+      <div><strong id="toast-title">Document indexed</strong><small id="toast-message"></small></div>
+    </div>
+    <script src="./app.js"></script>
+  </body>
+</html>

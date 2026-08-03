@@ -1,0 +1,48 @@
+services:
+  atlas-knowledge:
+    environment:
+      ATLAS_EMBEDDING_PROVIDER: hash
+      ATLAS_GENERATION_PROVIDER: extractive
+      ATLAS_OTEL_EXPORTER_OTLP_ENDPOINT: http://phoenix:6006/v1/traces
+      ATLAS_OTEL_SERVICE_NAME: atlas-knowledge
+    depends_on:
+      phoenix:
+        condition: service_healthy
+
+  phoenix-volume-init:
+    image: alpine:3.22
+    command:
+      - sh
+      - -c
+      - chown -R 65532:65532 /mnt/data
+    volumes:
+      - phoenix-data:/mnt/data
+    restart: "no"
+
+  phoenix:
+    image: arizephoenix/phoenix:version-19.6.0-nonroot
+    depends_on:
+      phoenix-volume-init:
+        condition: service_completed_successfully
+    ports:
+      - "6006:6006"
+    environment:
+      PHOENIX_WORKING_DIR: /mnt/data
+      PHOENIX_ALLOW_EXTERNAL_RESOURCES: "false"
+    volumes:
+      - phoenix-data:/mnt/data
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - >-
+          import urllib.request;
+          urllib.request.urlopen('http://127.0.0.1:6006/', timeout=3)
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    restart: unless-stopped
+
+volumes:
+  phoenix-data:

@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: atlas-knowledge
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/health
+    autoDeployTrigger: "off"
+    envVars:
+      - key: ATLAS_EMBEDDING_PROVIDER
+        value: hash
+      - key: ATLAS_GENERATION_PROVIDER
+        value: extractive

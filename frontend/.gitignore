@@ -1,0 +1,9 @@
+node_modules/
+dist/
+test-results/
+playwright-report/
+.playwright-mcp/
+*.local
+.vite/
+data/runtime-e2e/
+data/runtime-probe/

@@ -1,0 +1,72 @@
+{
+  "experiment": "atlas-held-out-generation-comparison",
+  "version": "2026-08-03",
+  "dataset": "evals/golden.jsonl",
+  "selection": {
+    "split": "held_out",
+    "cases": 20,
+    "reason": "Use the same untouched held-out cases as the existing semantic release gate."
+  },
+  "controlled_variables": {
+    "retrieval_profile": "sparse",
+    "chunking_profile": "fixed",
+    "embedding_provider": "hash",
+    "top_k": 5,
+    "max_generation_tokens": 256
+  },
+  "providers": {
+    "baseline": {
+      "generation_provider": "extractive",
+      "pricing": {
+        "input_per_million_usd": 0.0,
+        "output_per_million_usd": 0.0
+      }
+    },
+    "candidate": {
+      "generation_provider": "openai-compatible",
+      "runner": "llama.cpp OpenAI-compatible server",
+      "runner_revision": "f2b52a87e82fa461191565a19d4ef9fd8b8fbd87",
+      "pricing": {
+        "input_per_million_usd": 0.0,
+        "output_per_million_usd": 0.0
+      }
+    }
+  },
+  "semantic_judge": {
+    "provider": "local-hhem",
+    "model": "vectara/hallucination_evaluation_model",
+    "model_revision": "8e4a2e6e96c708cc76c2344f7e4757df2515292c"
+  },
+  "controls": {
+    "supported": {
+      "premise": "Approved refunds return to the original payment method.",
+      "hypothesis": "Approved refunds return to the original payment method."
+    },
+    "unsupported": {
+      "premise": "Approved refunds return to the original payment method.",
+      "hypothesis": "Approved refunds are always paid in cryptocurrency."
+    }
+  },
+  "promotion_gate": {
+    "noninferiority_tolerance": 0.0,
+    "noninferiority_metrics": [
+      "citation_validity",
+      "citation_completeness",
+      "mean_semantic_citation_support",
+      "mean_semantic_answer_faithfulness",
+      "abstention_accuracy"
+    ],
+    "quality_gain_metrics": [
+      "mean_semantic_citation_support",
+      "mean_semantic_answer_faithfulness"
+    ],
+    "minimum_quality_gain": 0.02,
+    "max_candidate_p95_generation_ms": 15000
+  },
+  "notes": [
+    "The candidate is not promoted for merely producing fluent answers.",
+    "Every promotion check is predeclared and all must pass.",
+    "The benchmark records uncited candidate output for scoring; production still rejects it.",
+    "Local inference has zero provider API cost; token and resource use are still measured."
+  ]
+}

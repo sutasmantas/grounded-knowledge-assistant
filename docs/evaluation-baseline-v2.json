@@ -1,0 +1,485 @@
+{
+  "schema_version": "2.0",
+  "case_inventory": {
+    "total": 56,
+    "runnable": 50,
+    "capability_gated": 6,
+    "development": 33,
+    "held_out": 23,
+    "gated_by_category": {
+      "prompt_injection": 2,
+      "stale_version": 2,
+      "tenant_isolation": 2
+    },
+    "gated_cases": [
+      {
+        "id": "future-stale-latest",
+        "split": "held_out",
+        "category": "stale_version",
+        "skip_reason": "Document version metadata and latest-version filtering are implemented in Phase A1."
+      },
+      {
+        "id": "future-stale-superseded",
+        "split": "development",
+        "category": "stale_version",
+        "skip_reason": "Document version metadata and latest-version filtering are implemented in Phase A1."
+      },
+      {
+        "id": "future-injection-source",
+        "split": "held_out",
+        "category": "prompt_injection",
+        "skip_reason": "Adversarial source fixtures and prompt-injection defenses are implemented in security experiment E10."
+      },
+      {
+        "id": "future-injection-exfiltration",
+        "split": "development",
+        "category": "prompt_injection",
+        "skip_reason": "Adversarial source fixtures and prompt-injection defenses are implemented in security experiment E10."
+      },
+      {
+        "id": "future-tenant-a",
+        "split": "held_out",
+        "category": "tenant_isolation",
+        "skip_reason": "Tenant identity, ACL metadata, and deny-by-default filtering are implemented in Phase B."
+      },
+      {
+        "id": "future-tenant-b",
+        "split": "development",
+        "category": "tenant_isolation",
+        "skip_reason": "Tenant identity, ACL metadata, and deny-by-default filtering are implemented in Phase B."
+      }
+    ]
+  },
+  "profiles": {
+    "dense": {
+      "overall": {
+        "cases": 50,
+        "answerable_cases": 46,
+        "unanswerable_cases": 4,
+        "mrr_at_5": 0.837,
+        "recall_at_5": 0.8152,
+        "ndcg_at_5": 0.8034,
+        "no_answer_accuracy": 0.75,
+        "p50_retrieval_ms": 10,
+        "p95_retrieval_ms": 12,
+        "p50_total_ms": 14,
+        "p95_total_ms": 17
+      },
+      "by_split": {
+        "development": {
+          "cases": 30,
+          "answerable_cases": 28,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.875,
+          "recall_at_5": 0.875,
+          "ndcg_at_5": 0.8476,
+          "no_answer_accuracy": 1.0,
+          "p50_retrieval_ms": 10,
+          "p95_retrieval_ms": 13,
+          "p50_total_ms": 14,
+          "p95_total_ms": 19
+        },
+        "held_out": {
+          "cases": 20,
+          "answerable_cases": 18,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.7778,
+          "recall_at_5": 0.7222,
+          "ndcg_at_5": 0.7348,
+          "no_answer_accuracy": 0.5,
+          "p50_retrieval_ms": 9,
+          "p95_retrieval_ms": 11,
+          "p50_total_ms": 14,
+          "p95_total_ms": 15
+        }
+      },
+      "by_category": {
+        "boundary": {
+          "cases": 9,
+          "answerable_cases": 9,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 0.8333,
+          "recall_at_5": 0.8889,
+          "ndcg_at_5": 0.8479,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 9,
+          "p95_retrieval_ms": 11,
+          "p50_total_ms": 13,
+          "p95_total_ms": 17
+        },
+        "collection_filter": {
+          "cases": 2,
+          "answerable_cases": 0,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.0,
+          "recall_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "no_answer_accuracy": 0.5,
+          "p50_retrieval_ms": 9,
+          "p95_retrieval_ms": 9,
+          "p50_total_ms": 12,
+          "p95_total_ms": 14
+        },
+        "exact": {
+          "cases": 17,
+          "answerable_cases": 17,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 0.9706,
+          "recall_at_5": 0.9706,
+          "ndcg_at_5": 0.9555,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 10,
+          "p95_retrieval_ms": 121,
+          "p50_total_ms": 15,
+          "p95_total_ms": 125
+        },
+        "multi_document": {
+          "cases": 4,
+          "answerable_cases": 4,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 0.5,
+          "ndcg_at_5": 0.6131,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 10,
+          "p95_retrieval_ms": 11,
+          "p50_total_ms": 15,
+          "p95_total_ms": 15
+        },
+        "paraphrase": {
+          "cases": 14,
+          "answerable_cases": 14,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 0.6071,
+          "recall_at_5": 0.6429,
+          "ndcg_at_5": 0.6165,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 10,
+          "p95_retrieval_ms": 11,
+          "p50_total_ms": 14,
+          "p95_total_ms": 16
+        },
+        "table": {
+          "cases": 2,
+          "answerable_cases": 2,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 12,
+          "p95_retrieval_ms": 12,
+          "p50_total_ms": 18,
+          "p95_total_ms": 19
+        },
+        "unanswerable": {
+          "cases": 2,
+          "answerable_cases": 0,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.0,
+          "recall_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "no_answer_accuracy": 1.0,
+          "p50_retrieval_ms": 8,
+          "p95_retrieval_ms": 9,
+          "p50_total_ms": 10,
+          "p95_total_ms": 12
+        }
+      }
+    },
+    "hybrid": {
+      "overall": {
+        "cases": 50,
+        "answerable_cases": 46,
+        "unanswerable_cases": 4,
+        "mrr_at_5": 0.9348,
+        "recall_at_5": 1.0,
+        "ndcg_at_5": 0.943,
+        "no_answer_accuracy": 0.25,
+        "p50_retrieval_ms": 29,
+        "p95_retrieval_ms": 33,
+        "p50_total_ms": 34,
+        "p95_total_ms": 40
+      },
+      "by_split": {
+        "development": {
+          "cases": 30,
+          "answerable_cases": 28,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.9464,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9532,
+          "no_answer_accuracy": 0.5,
+          "p50_retrieval_ms": 29,
+          "p95_retrieval_ms": 39,
+          "p50_total_ms": 34,
+          "p95_total_ms": 44
+        },
+        "held_out": {
+          "cases": 20,
+          "answerable_cases": 18,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.9167,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9272,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 29,
+          "p95_retrieval_ms": 32,
+          "p50_total_ms": 34,
+          "p95_total_ms": 39
+        }
+      },
+      "by_category": {
+        "boundary": {
+          "cases": 9,
+          "answerable_cases": 9,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 0.9444,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.959,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 29,
+          "p95_retrieval_ms": 30,
+          "p50_total_ms": 34,
+          "p95_total_ms": 38
+        },
+        "collection_filter": {
+          "cases": 2,
+          "answerable_cases": 0,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.0,
+          "recall_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 28,
+          "p95_retrieval_ms": 29,
+          "p50_total_ms": 31,
+          "p95_total_ms": 31
+        },
+        "exact": {
+          "cases": 17,
+          "answerable_cases": 17,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 0.9706,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9736,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 29,
+          "p95_retrieval_ms": 45,
+          "p50_total_ms": 33,
+          "p95_total_ms": 52
+        },
+        "multi_document": {
+          "cases": 4,
+          "answerable_cases": 4,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9185,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 31,
+          "p95_retrieval_ms": 32,
+          "p50_total_ms": 38,
+          "p95_total_ms": 38
+        },
+        "paraphrase": {
+          "cases": 14,
+          "answerable_cases": 14,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 0.8571,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.8945,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 28,
+          "p95_retrieval_ms": 39,
+          "p50_total_ms": 33,
+          "p95_total_ms": 44
+        },
+        "table": {
+          "cases": 2,
+          "answerable_cases": 2,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 31,
+          "p95_retrieval_ms": 33,
+          "p50_total_ms": 36,
+          "p95_total_ms": 39
+        },
+        "unanswerable": {
+          "cases": 2,
+          "answerable_cases": 0,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.0,
+          "recall_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "no_answer_accuracy": 0.5,
+          "p50_retrieval_ms": 28,
+          "p95_retrieval_ms": 30,
+          "p50_total_ms": 32,
+          "p95_total_ms": 36
+        }
+      }
+    },
+    "hybrid-reranked": {
+      "overall": {
+        "cases": 50,
+        "answerable_cases": 46,
+        "unanswerable_cases": 4,
+        "mrr_at_5": 0.9674,
+        "recall_at_5": 1.0,
+        "ndcg_at_5": 0.9733,
+        "no_answer_accuracy": 0.25,
+        "p50_retrieval_ms": 33,
+        "p95_retrieval_ms": 45,
+        "p50_total_ms": 40,
+        "p95_total_ms": 54
+      },
+      "by_split": {
+        "development": {
+          "cases": 30,
+          "answerable_cases": 28,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.9821,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9868,
+          "no_answer_accuracy": 0.5,
+          "p50_retrieval_ms": 33,
+          "p95_retrieval_ms": 45,
+          "p50_total_ms": 40,
+          "p95_total_ms": 54
+        },
+        "held_out": {
+          "cases": 20,
+          "answerable_cases": 18,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.9444,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9522,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 32,
+          "p95_retrieval_ms": 44,
+          "p50_total_ms": 40,
+          "p95_total_ms": 54
+        }
+      },
+      "by_category": {
+        "boundary": {
+          "cases": 9,
+          "answerable_cases": 9,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 0.9444,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.959,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 36,
+          "p95_retrieval_ms": 48,
+          "p50_total_ms": 44,
+          "p95_total_ms": 57
+        },
+        "collection_filter": {
+          "cases": 2,
+          "answerable_cases": 0,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.0,
+          "recall_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 30,
+          "p95_retrieval_ms": 30,
+          "p50_total_ms": 33,
+          "p95_total_ms": 34
+        },
+        "exact": {
+          "cases": 17,
+          "answerable_cases": 17,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 33,
+          "p95_retrieval_ms": 47,
+          "p50_total_ms": 41,
+          "p95_total_ms": 54
+        },
+        "multi_document": {
+          "cases": 4,
+          "answerable_cases": 4,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9693,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 32,
+          "p95_retrieval_ms": 35,
+          "p50_total_ms": 38,
+          "p95_total_ms": 43
+        },
+        "paraphrase": {
+          "cases": 14,
+          "answerable_cases": 14,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 0.9286,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9473,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 36,
+          "p95_retrieval_ms": 45,
+          "p50_total_ms": 44,
+          "p95_total_ms": 55
+        },
+        "table": {
+          "cases": 2,
+          "answerable_cases": 2,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 32,
+          "p95_retrieval_ms": 32,
+          "p50_total_ms": 39,
+          "p95_total_ms": 39
+        },
+        "unanswerable": {
+          "cases": 2,
+          "answerable_cases": 0,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.0,
+          "recall_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "no_answer_accuracy": 0.5,
+          "p50_retrieval_ms": 26,
+          "p95_retrieval_ms": 27,
+          "p50_total_ms": 36,
+          "p95_total_ms": 39
+        }
+      }
+    }
+  },
+  "run": {
+    "generated_at": "2026-07-30T17:49:26.316998+00:00",
+    "dataset": "evals/golden.jsonl",
+    "dataset_sha256": "1f31cb1885115f4fb4e8a5c418ecaae55ea88cd67861fa1173905d1335434f14",
+    "manifest": "evals/experiment-manifest.json",
+    "manifest_sha256": "635331f5623e94115a4f50da4644d35e8698616ca0ae072da670128344ce305e",
+    "profiles": [
+      "dense",
+      "hybrid",
+      "hybrid-reranked"
+    ],
+    "embedding_provider": "hash",
+    "reranker_provider": "lexical",
+    "generation_provider": "extractive",
+    "estimated_provider_cost_usd": 0.0,
+    "cost_note": "Local deterministic or local model execution; hosted API cost is zero.",
+    "index_build_ms": 589,
+    "traced_python_peak_memory_mb": 1.56,
+    "memory_note": "Python allocator peak; native model/runtime memory is excluded.",
+    "python": "3.11.9",
+    "platform": "Windows-10-10.0.26200-SP0"
+  }
+}

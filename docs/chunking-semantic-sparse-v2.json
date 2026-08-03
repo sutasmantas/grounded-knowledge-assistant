@@ -1,0 +1,596 @@
+{
+  "schema_version": "1.0",
+  "manifest": {
+    "experiment": "atlas-chunking-bakeoff",
+    "version": "2026-07-30",
+    "controlled_variables": {
+      "retrieval_profiles": [
+        "sparse",
+        "hybrid"
+      ],
+      "top_k": 5,
+      "candidate_k": 24,
+      "chunk_size": 950,
+      "chunk_overlap": 140,
+      "generation_provider": "extractive"
+    },
+    "profiles": {
+      "fixed": "Character windows with word-boundary overlap.",
+      "heading-aware": "Markdown sections kept intact when possible; heading repeated when a section splits.",
+      "parent-child": "Smaller child text is indexed; the containing section is returned as citation context.",
+      "docling-hybrid": "Docling document hierarchy with BGE-tokenizer-aware splitting, heading context, and peer merging."
+    },
+    "adoption_gate": "Promote only when held-out retrieval quality improves for a relevant category without unacceptable index, latency, or implementation cost.",
+    "notes": [
+      "All profiles use the same extraction output and frozen evaluation cases.",
+      "Sparse and hybrid retrieval are run separately; the profile is recorded in each output artifact.",
+      "Parent-child search results are deduplicated by returned parent context.",
+      "The controlled corpus includes multiple sections, distractors, Markdown tables, and multi-document questions."
+    ]
+  },
+  "dataset": "evals/golden.jsonl",
+  "embedding_provider": "fastembed",
+  "retrieval_profile": "sparse",
+  "results": {
+    "fixed": {
+      "documents": 6,
+      "indexed_chunks": 19,
+      "index_build_ms": 1282,
+      "index_disk_bytes": 205381,
+      "overall": {
+        "cases": 50,
+        "answerable_cases": 46,
+        "unanswerable_cases": 4,
+        "mrr_at_5": 0.9891,
+        "recall_at_5": 1.0,
+        "ndcg_at_5": 0.9885,
+        "no_answer_accuracy": 0.25,
+        "p50_retrieval_ms": 2,
+        "p95_retrieval_ms": 7,
+        "p50_total_ms": 5,
+        "p95_total_ms": 10
+      },
+      "by_split": {
+        "development": {
+          "cases": 30,
+          "answerable_cases": 28,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9971,
+          "no_answer_accuracy": 0.5,
+          "p50_retrieval_ms": 2,
+          "p95_retrieval_ms": 7,
+          "p50_total_ms": 5,
+          "p95_total_ms": 11
+        },
+        "held_out": {
+          "cases": 20,
+          "answerable_cases": 18,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.9722,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.975,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 2,
+          "p95_retrieval_ms": 3,
+          "p50_total_ms": 5,
+          "p95_total_ms": 7
+        }
+      },
+      "by_category": {
+        "boundary": {
+          "cases": 9,
+          "answerable_cases": 9,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 0.9444,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.959,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 2,
+          "p95_retrieval_ms": 7,
+          "p50_total_ms": 5,
+          "p95_total_ms": 10
+        },
+        "collection_filter": {
+          "cases": 2,
+          "answerable_cases": 0,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.0,
+          "recall_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 2,
+          "p95_retrieval_ms": 3,
+          "p50_total_ms": 4,
+          "p95_total_ms": 4
+        },
+        "exact": {
+          "cases": 17,
+          "answerable_cases": 17,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 2,
+          "p95_retrieval_ms": 9,
+          "p50_total_ms": 5,
+          "p95_total_ms": 11
+        },
+        "multi_document": {
+          "cases": 4,
+          "answerable_cases": 4,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9598,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 2,
+          "p95_retrieval_ms": 7,
+          "p50_total_ms": 6,
+          "p95_total_ms": 10
+        },
+        "paraphrase": {
+          "cases": 14,
+          "answerable_cases": 14,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 2,
+          "p95_retrieval_ms": 6,
+          "p50_total_ms": 5,
+          "p95_total_ms": 14
+        },
+        "table": {
+          "cases": 2,
+          "answerable_cases": 2,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 2,
+          "p95_retrieval_ms": 3,
+          "p50_total_ms": 6,
+          "p95_total_ms": 7
+        },
+        "unanswerable": {
+          "cases": 2,
+          "answerable_cases": 0,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.0,
+          "recall_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "no_answer_accuracy": 0.5,
+          "p50_retrieval_ms": 2,
+          "p95_retrieval_ms": 3,
+          "p50_total_ms": 4,
+          "p95_total_ms": 5
+        }
+      }
+    },
+    "heading-aware": {
+      "documents": 6,
+      "indexed_chunks": 51,
+      "index_build_ms": 1392,
+      "index_disk_bytes": 328261,
+      "overall": {
+        "cases": 50,
+        "answerable_cases": 46,
+        "unanswerable_cases": 4,
+        "mrr_at_5": 1.0,
+        "recall_at_5": 0.9891,
+        "ndcg_at_5": 0.9833,
+        "no_answer_accuracy": 0.25,
+        "p50_retrieval_ms": 4,
+        "p95_retrieval_ms": 6,
+        "p50_total_ms": 4,
+        "p95_total_ms": 7
+      },
+      "by_split": {
+        "development": {
+          "cases": 30,
+          "answerable_cases": 28,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9893,
+          "no_answer_accuracy": 0.5,
+          "p50_retrieval_ms": 4,
+          "p95_retrieval_ms": 6,
+          "p50_total_ms": 4,
+          "p95_total_ms": 7
+        },
+        "held_out": {
+          "cases": 20,
+          "answerable_cases": 18,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 0.9722,
+          "ndcg_at_5": 0.974,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 4,
+          "p95_retrieval_ms": 5,
+          "p50_total_ms": 4,
+          "p95_total_ms": 6
+        }
+      },
+      "by_category": {
+        "boundary": {
+          "cases": 9,
+          "answerable_cases": 9,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 4,
+          "p95_retrieval_ms": 5,
+          "p50_total_ms": 4,
+          "p95_total_ms": 6
+        },
+        "collection_filter": {
+          "cases": 2,
+          "answerable_cases": 0,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.0,
+          "recall_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 3,
+          "p95_retrieval_ms": 3,
+          "p50_total_ms": 4,
+          "p95_total_ms": 4
+        },
+        "exact": {
+          "cases": 17,
+          "answerable_cases": 17,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9912,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 4,
+          "p95_retrieval_ms": 6,
+          "p50_total_ms": 4,
+          "p95_total_ms": 7
+        },
+        "multi_document": {
+          "cases": 4,
+          "answerable_cases": 4,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 0.875,
+          "ndcg_at_5": 0.8458,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 4,
+          "p95_retrieval_ms": 4,
+          "p50_total_ms": 4,
+          "p95_total_ms": 5
+        },
+        "paraphrase": {
+          "cases": 14,
+          "answerable_cases": 14,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 4,
+          "p95_retrieval_ms": 6,
+          "p50_total_ms": 5,
+          "p95_total_ms": 7
+        },
+        "table": {
+          "cases": 2,
+          "answerable_cases": 2,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 4,
+          "p95_retrieval_ms": 4,
+          "p50_total_ms": 4,
+          "p95_total_ms": 5
+        },
+        "unanswerable": {
+          "cases": 2,
+          "answerable_cases": 0,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.0,
+          "recall_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "no_answer_accuracy": 0.5,
+          "p50_retrieval_ms": 3,
+          "p95_retrieval_ms": 3,
+          "p50_total_ms": 4,
+          "p95_total_ms": 4
+        }
+      }
+    },
+    "parent-child": {
+      "documents": 6,
+      "indexed_chunks": 51,
+      "index_build_ms": 1635,
+      "index_disk_bytes": 328261,
+      "overall": {
+        "cases": 50,
+        "answerable_cases": 46,
+        "unanswerable_cases": 4,
+        "mrr_at_5": 1.0,
+        "recall_at_5": 0.9891,
+        "ndcg_at_5": 0.9833,
+        "no_answer_accuracy": 0.25,
+        "p50_retrieval_ms": 4,
+        "p95_retrieval_ms": 5,
+        "p50_total_ms": 5,
+        "p95_total_ms": 6
+      },
+      "by_split": {
+        "development": {
+          "cases": 30,
+          "answerable_cases": 28,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9893,
+          "no_answer_accuracy": 0.5,
+          "p50_retrieval_ms": 4,
+          "p95_retrieval_ms": 5,
+          "p50_total_ms": 5,
+          "p95_total_ms": 6
+        },
+        "held_out": {
+          "cases": 20,
+          "answerable_cases": 18,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 0.9722,
+          "ndcg_at_5": 0.974,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 4,
+          "p95_retrieval_ms": 5,
+          "p50_total_ms": 5,
+          "p95_total_ms": 6
+        }
+      },
+      "by_category": {
+        "boundary": {
+          "cases": 9,
+          "answerable_cases": 9,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 4,
+          "p95_retrieval_ms": 5,
+          "p50_total_ms": 5,
+          "p95_total_ms": 6
+        },
+        "collection_filter": {
+          "cases": 2,
+          "answerable_cases": 0,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.0,
+          "recall_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 3,
+          "p95_retrieval_ms": 3,
+          "p50_total_ms": 4,
+          "p95_total_ms": 4
+        },
+        "exact": {
+          "cases": 17,
+          "answerable_cases": 17,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9912,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 4,
+          "p95_retrieval_ms": 5,
+          "p50_total_ms": 5,
+          "p95_total_ms": 6
+        },
+        "multi_document": {
+          "cases": 4,
+          "answerable_cases": 4,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 0.875,
+          "ndcg_at_5": 0.8458,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 4,
+          "p95_retrieval_ms": 4,
+          "p50_total_ms": 5,
+          "p95_total_ms": 5
+        },
+        "paraphrase": {
+          "cases": 14,
+          "answerable_cases": 14,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 4,
+          "p95_retrieval_ms": 5,
+          "p50_total_ms": 4,
+          "p95_total_ms": 6
+        },
+        "table": {
+          "cases": 2,
+          "answerable_cases": 2,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 4,
+          "p95_retrieval_ms": 4,
+          "p50_total_ms": 5,
+          "p95_total_ms": 5
+        },
+        "unanswerable": {
+          "cases": 2,
+          "answerable_cases": 0,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.0,
+          "recall_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "no_answer_accuracy": 0.5,
+          "p50_retrieval_ms": 3,
+          "p95_retrieval_ms": 3,
+          "p50_total_ms": 4,
+          "p95_total_ms": 4
+        }
+      }
+    },
+    "docling-hybrid": {
+      "documents": 6,
+      "indexed_chunks": 51,
+      "index_build_ms": 17884,
+      "index_disk_bytes": 328261,
+      "overall": {
+        "cases": 50,
+        "answerable_cases": 46,
+        "unanswerable_cases": 4,
+        "mrr_at_5": 1.0,
+        "recall_at_5": 0.9783,
+        "ndcg_at_5": 0.9773,
+        "no_answer_accuracy": 0.25,
+        "p50_retrieval_ms": 3,
+        "p95_retrieval_ms": 4,
+        "p50_total_ms": 4,
+        "p95_total_ms": 5
+      },
+      "by_split": {
+        "development": {
+          "cases": 30,
+          "answerable_cases": 28,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 0.9821,
+          "ndcg_at_5": 0.9808,
+          "no_answer_accuracy": 0.5,
+          "p50_retrieval_ms": 3,
+          "p95_retrieval_ms": 6,
+          "p50_total_ms": 4,
+          "p95_total_ms": 7
+        },
+        "held_out": {
+          "cases": 20,
+          "answerable_cases": 18,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 0.9722,
+          "ndcg_at_5": 0.9717,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 3,
+          "p95_retrieval_ms": 3,
+          "p50_total_ms": 4,
+          "p95_total_ms": 4
+        }
+      },
+      "by_category": {
+        "boundary": {
+          "cases": 9,
+          "answerable_cases": 9,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 3,
+          "p95_retrieval_ms": 3,
+          "p50_total_ms": 4,
+          "p95_total_ms": 4
+        },
+        "collection_filter": {
+          "cases": 2,
+          "answerable_cases": 0,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.0,
+          "recall_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 3,
+          "p95_retrieval_ms": 3,
+          "p50_total_ms": 3,
+          "p95_total_ms": 3
+        },
+        "exact": {
+          "cases": 17,
+          "answerable_cases": 17,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 0.9706,
+          "ndcg_at_5": 0.9772,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 3,
+          "p95_retrieval_ms": 10,
+          "p50_total_ms": 4,
+          "p95_total_ms": 11
+        },
+        "multi_document": {
+          "cases": 4,
+          "answerable_cases": 4,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 0.875,
+          "ndcg_at_5": 0.8351,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 3,
+          "p95_retrieval_ms": 3,
+          "p50_total_ms": 4,
+          "p95_total_ms": 4
+        },
+        "paraphrase": {
+          "cases": 14,
+          "answerable_cases": 14,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 3,
+          "p95_retrieval_ms": 4,
+          "p50_total_ms": 4,
+          "p95_total_ms": 5
+        },
+        "table": {
+          "cases": 2,
+          "answerable_cases": 2,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 3,
+          "p95_retrieval_ms": 3,
+          "p50_total_ms": 4,
+          "p95_total_ms": 4
+        },
+        "unanswerable": {
+          "cases": 2,
+          "answerable_cases": 0,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.0,
+          "recall_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "no_answer_accuracy": 0.5,
+          "p50_retrieval_ms": 4,
+          "p95_retrieval_ms": 4,
+          "p50_total_ms": 4,
+          "p95_total_ms": 4
+        }
+      }
+    }
+  }
+}

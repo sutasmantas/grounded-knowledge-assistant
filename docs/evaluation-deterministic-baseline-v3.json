@@ -1,0 +1,623 @@
+{
+  "schema_version": "2.0",
+  "case_inventory": {
+    "total": 56,
+    "runnable": 50,
+    "capability_gated": 6,
+    "development": 33,
+    "held_out": 23,
+    "gated_by_category": {
+      "prompt_injection": 2,
+      "stale_version": 2,
+      "tenant_isolation": 2
+    },
+    "gated_cases": [
+      {
+        "id": "future-stale-latest",
+        "split": "held_out",
+        "category": "stale_version",
+        "skip_reason": "Latest-version and superseded-vector behavior runs in the document lifecycle regression suite; it is not a ranking-quality metric."
+      },
+      {
+        "id": "future-stale-superseded",
+        "split": "development",
+        "category": "stale_version",
+        "skip_reason": "Latest-version and superseded-vector behavior runs in the document lifecycle regression suite; it is not a ranking-quality metric."
+      },
+      {
+        "id": "future-injection-source",
+        "split": "held_out",
+        "category": "prompt_injection",
+        "skip_reason": "Adversarial source fixtures run in the deterministic security suite; this ranking benchmark does not claim general model-level injection resistance."
+      },
+      {
+        "id": "future-injection-exfiltration",
+        "split": "development",
+        "category": "prompt_injection",
+        "skip_reason": "Adversarial source fixtures run in the deterministic security suite; this ranking benchmark does not claim general model-level injection resistance."
+      },
+      {
+        "id": "future-tenant-a",
+        "split": "held_out",
+        "category": "tenant_isolation",
+        "skip_reason": "Cross-tenant canaries and ACL denial run in the adversarial tenant suite; isolation is enforced before retrieval and is not scored as ranking quality."
+      },
+      {
+        "id": "future-tenant-b",
+        "split": "development",
+        "category": "tenant_isolation",
+        "skip_reason": "Cross-tenant canaries and ACL denial run in the adversarial tenant suite; isolation is enforced before retrieval and is not scored as ranking quality."
+      }
+    ]
+  },
+  "profiles": {
+    "dense": {
+      "overall": {
+        "cases": 50,
+        "answerable_cases": 46,
+        "unanswerable_cases": 4,
+        "mrr_at_5": 0.837,
+        "recall_at_5": 0.8152,
+        "ndcg_at_5": 0.8034,
+        "no_answer_accuracy": 0.75,
+        "p50_retrieval_ms": 11,
+        "p95_retrieval_ms": 14,
+        "p50_total_ms": 14,
+        "p95_total_ms": 19
+      },
+      "by_split": {
+        "development": {
+          "cases": 30,
+          "answerable_cases": 28,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.875,
+          "recall_at_5": 0.875,
+          "ndcg_at_5": 0.8476,
+          "no_answer_accuracy": 1.0,
+          "p50_retrieval_ms": 11,
+          "p95_retrieval_ms": 15,
+          "p50_total_ms": 14,
+          "p95_total_ms": 19
+        },
+        "held_out": {
+          "cases": 20,
+          "answerable_cases": 18,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.7778,
+          "recall_at_5": 0.7222,
+          "ndcg_at_5": 0.7348,
+          "no_answer_accuracy": 0.5,
+          "p50_retrieval_ms": 10,
+          "p95_retrieval_ms": 13,
+          "p50_total_ms": 14,
+          "p95_total_ms": 18
+        }
+      },
+      "by_category": {
+        "boundary": {
+          "cases": 9,
+          "answerable_cases": 9,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 0.8333,
+          "recall_at_5": 0.8889,
+          "ndcg_at_5": 0.8479,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 11,
+          "p95_retrieval_ms": 13,
+          "p50_total_ms": 14,
+          "p95_total_ms": 16
+        },
+        "collection_filter": {
+          "cases": 2,
+          "answerable_cases": 0,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.0,
+          "recall_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "no_answer_accuracy": 0.5,
+          "p50_retrieval_ms": 8,
+          "p95_retrieval_ms": 9,
+          "p50_total_ms": 10,
+          "p95_total_ms": 11
+        },
+        "exact": {
+          "cases": 17,
+          "answerable_cases": 17,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 0.9706,
+          "recall_at_5": 0.9706,
+          "ndcg_at_5": 0.9555,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 11,
+          "p95_retrieval_ms": 18,
+          "p50_total_ms": 15,
+          "p95_total_ms": 23
+        },
+        "multi_document": {
+          "cases": 4,
+          "answerable_cases": 4,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 0.5,
+          "ndcg_at_5": 0.6131,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 9,
+          "p95_retrieval_ms": 11,
+          "p50_total_ms": 12,
+          "p95_total_ms": 14
+        },
+        "paraphrase": {
+          "cases": 14,
+          "answerable_cases": 14,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 0.6071,
+          "recall_at_5": 0.6429,
+          "ndcg_at_5": 0.6165,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 11,
+          "p95_retrieval_ms": 14,
+          "p50_total_ms": 15,
+          "p95_total_ms": 19
+        },
+        "table": {
+          "cases": 2,
+          "answerable_cases": 2,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 9,
+          "p95_retrieval_ms": 9,
+          "p50_total_ms": 13,
+          "p95_total_ms": 14
+        },
+        "unanswerable": {
+          "cases": 2,
+          "answerable_cases": 0,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.0,
+          "recall_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "no_answer_accuracy": 1.0,
+          "p50_retrieval_ms": 10,
+          "p95_retrieval_ms": 10,
+          "p50_total_ms": 10,
+          "p95_total_ms": 12
+        }
+      }
+    },
+    "sparse": {
+      "overall": {
+        "cases": 50,
+        "answerable_cases": 46,
+        "unanswerable_cases": 4,
+        "mrr_at_5": 0.9891,
+        "recall_at_5": 1.0,
+        "ndcg_at_5": 0.9885,
+        "no_answer_accuracy": 0.25,
+        "p50_retrieval_ms": 7,
+        "p95_retrieval_ms": 9,
+        "p50_total_ms": 12,
+        "p95_total_ms": 16
+      },
+      "by_split": {
+        "development": {
+          "cases": 30,
+          "answerable_cases": 28,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9971,
+          "no_answer_accuracy": 0.5,
+          "p50_retrieval_ms": 7,
+          "p95_retrieval_ms": 9,
+          "p50_total_ms": 12,
+          "p95_total_ms": 16
+        },
+        "held_out": {
+          "cases": 20,
+          "answerable_cases": 18,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.9722,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.975,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 6,
+          "p95_retrieval_ms": 10,
+          "p50_total_ms": 14,
+          "p95_total_ms": 16
+        }
+      },
+      "by_category": {
+        "boundary": {
+          "cases": 9,
+          "answerable_cases": 9,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 0.9444,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.959,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 7,
+          "p95_retrieval_ms": 8,
+          "p50_total_ms": 14,
+          "p95_total_ms": 16
+        },
+        "collection_filter": {
+          "cases": 2,
+          "answerable_cases": 0,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.0,
+          "recall_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 6,
+          "p95_retrieval_ms": 8,
+          "p50_total_ms": 8,
+          "p95_total_ms": 10
+        },
+        "exact": {
+          "cases": 17,
+          "answerable_cases": 17,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 7,
+          "p95_retrieval_ms": 11,
+          "p50_total_ms": 13,
+          "p95_total_ms": 16
+        },
+        "multi_document": {
+          "cases": 4,
+          "answerable_cases": 4,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9598,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 6,
+          "p95_retrieval_ms": 7,
+          "p50_total_ms": 11,
+          "p95_total_ms": 14
+        },
+        "paraphrase": {
+          "cases": 14,
+          "answerable_cases": 14,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 6,
+          "p95_retrieval_ms": 10,
+          "p50_total_ms": 14,
+          "p95_total_ms": 17
+        },
+        "table": {
+          "cases": 2,
+          "answerable_cases": 2,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 8,
+          "p95_retrieval_ms": 8,
+          "p50_total_ms": 14,
+          "p95_total_ms": 15
+        },
+        "unanswerable": {
+          "cases": 2,
+          "answerable_cases": 0,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.0,
+          "recall_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "no_answer_accuracy": 0.5,
+          "p50_retrieval_ms": 6,
+          "p95_retrieval_ms": 6,
+          "p50_total_ms": 8,
+          "p95_total_ms": 10
+        }
+      }
+    },
+    "hybrid": {
+      "overall": {
+        "cases": 50,
+        "answerable_cases": 46,
+        "unanswerable_cases": 4,
+        "mrr_at_5": 0.9348,
+        "recall_at_5": 1.0,
+        "ndcg_at_5": 0.943,
+        "no_answer_accuracy": 0.25,
+        "p50_retrieval_ms": 34,
+        "p95_retrieval_ms": 41,
+        "p50_total_ms": 41,
+        "p95_total_ms": 50
+      },
+      "by_split": {
+        "development": {
+          "cases": 30,
+          "answerable_cases": 28,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.9464,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9532,
+          "no_answer_accuracy": 0.5,
+          "p50_retrieval_ms": 34,
+          "p95_retrieval_ms": 44,
+          "p50_total_ms": 40,
+          "p95_total_ms": 53
+        },
+        "held_out": {
+          "cases": 20,
+          "answerable_cases": 18,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.9167,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9272,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 34,
+          "p95_retrieval_ms": 40,
+          "p50_total_ms": 41,
+          "p95_total_ms": 48
+        }
+      },
+      "by_category": {
+        "boundary": {
+          "cases": 9,
+          "answerable_cases": 9,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 0.9444,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.959,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 32,
+          "p95_retrieval_ms": 35,
+          "p50_total_ms": 39,
+          "p95_total_ms": 43
+        },
+        "collection_filter": {
+          "cases": 2,
+          "answerable_cases": 0,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.0,
+          "recall_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 36,
+          "p95_retrieval_ms": 36,
+          "p50_total_ms": 40,
+          "p95_total_ms": 41
+        },
+        "exact": {
+          "cases": 17,
+          "answerable_cases": 17,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 0.9706,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9736,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 34,
+          "p95_retrieval_ms": 40,
+          "p50_total_ms": 41,
+          "p95_total_ms": 47
+        },
+        "multi_document": {
+          "cases": 4,
+          "answerable_cases": 4,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9185,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 42,
+          "p95_retrieval_ms": 44,
+          "p50_total_ms": 52,
+          "p95_total_ms": 54
+        },
+        "paraphrase": {
+          "cases": 14,
+          "answerable_cases": 14,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 0.8571,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.8945,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 34,
+          "p95_retrieval_ms": 37,
+          "p50_total_ms": 41,
+          "p95_total_ms": 45
+        },
+        "table": {
+          "cases": 2,
+          "answerable_cases": 2,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 33,
+          "p95_retrieval_ms": 35,
+          "p50_total_ms": 41,
+          "p95_total_ms": 43
+        },
+        "unanswerable": {
+          "cases": 2,
+          "answerable_cases": 0,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.0,
+          "recall_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "no_answer_accuracy": 0.5,
+          "p50_retrieval_ms": 38,
+          "p95_retrieval_ms": 38,
+          "p50_total_ms": 43,
+          "p95_total_ms": 46
+        }
+      }
+    },
+    "hybrid-reranked": {
+      "overall": {
+        "cases": 50,
+        "answerable_cases": 46,
+        "unanswerable_cases": 4,
+        "mrr_at_5": 0.9674,
+        "recall_at_5": 1.0,
+        "ndcg_at_5": 0.9733,
+        "no_answer_accuracy": 0.25,
+        "p50_retrieval_ms": 33,
+        "p95_retrieval_ms": 40,
+        "p50_total_ms": 40,
+        "p95_total_ms": 48
+      },
+      "by_split": {
+        "development": {
+          "cases": 30,
+          "answerable_cases": 28,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.9821,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9868,
+          "no_answer_accuracy": 0.5,
+          "p50_retrieval_ms": 33,
+          "p95_retrieval_ms": 43,
+          "p50_total_ms": 40,
+          "p95_total_ms": 49
+        },
+        "held_out": {
+          "cases": 20,
+          "answerable_cases": 18,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.9444,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9522,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 32,
+          "p95_retrieval_ms": 39,
+          "p50_total_ms": 38,
+          "p95_total_ms": 48
+        }
+      },
+      "by_category": {
+        "boundary": {
+          "cases": 9,
+          "answerable_cases": 9,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 0.9444,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.959,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 28,
+          "p95_retrieval_ms": 38,
+          "p50_total_ms": 35,
+          "p95_total_ms": 47
+        },
+        "collection_filter": {
+          "cases": 2,
+          "answerable_cases": 0,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.0,
+          "recall_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 30,
+          "p95_retrieval_ms": 30,
+          "p50_total_ms": 33,
+          "p95_total_ms": 33
+        },
+        "exact": {
+          "cases": 17,
+          "answerable_cases": 17,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 34,
+          "p95_retrieval_ms": 45,
+          "p50_total_ms": 44,
+          "p95_total_ms": 55
+        },
+        "multi_document": {
+          "cases": 4,
+          "answerable_cases": 4,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9693,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 33,
+          "p95_retrieval_ms": 33,
+          "p50_total_ms": 40,
+          "p95_total_ms": 42
+        },
+        "paraphrase": {
+          "cases": 14,
+          "answerable_cases": 14,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 0.9286,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9473,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 32,
+          "p95_retrieval_ms": 43,
+          "p50_total_ms": 40,
+          "p95_total_ms": 49
+        },
+        "table": {
+          "cases": 2,
+          "answerable_cases": 2,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 32,
+          "p95_retrieval_ms": 33,
+          "p50_total_ms": 40,
+          "p95_total_ms": 41
+        },
+        "unanswerable": {
+          "cases": 2,
+          "answerable_cases": 0,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.0,
+          "recall_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "no_answer_accuracy": 0.5,
+          "p50_retrieval_ms": 33,
+          "p95_retrieval_ms": 34,
+          "p50_total_ms": 42,
+          "p95_total_ms": 46
+        }
+      }
+    }
+  },
+  "run": {
+    "generated_at": "2026-07-30T20:27:40.625353+00:00",
+    "dataset": "evals/golden.jsonl",
+    "dataset_sha256": "53d58209ee675188389ee5b47f3369422b52c14b641815eca4a0180c501ca056",
+    "manifest": "evals/experiment-manifest.json",
+    "manifest_sha256": "91e0d2db638f07a0644fc4dd4121f92518ae68d469002f817c21ae310a518bf6",
+    "profiles": [
+      "dense",
+      "sparse",
+      "hybrid",
+      "hybrid-reranked"
+    ],
+    "embedding_provider": "hash",
+    "reranker_provider": "lexical",
+    "reranker_model": "",
+    "generation_provider": "extractive",
+    "estimated_provider_cost_usd": 0.0,
+    "cost_note": "Local deterministic or local model execution; hosted API cost is zero.",
+    "index_build_ms": 406,
+    "traced_python_peak_memory_mb": 1.7,
+    "memory_note": "Python allocator peak; native model/runtime memory is excluded.",
+    "python": "3.11.9",
+    "platform": "Windows-10-10.0.26200-SP0"
+  }
+}

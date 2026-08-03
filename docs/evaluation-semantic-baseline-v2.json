@@ -1,0 +1,485 @@
+{
+  "schema_version": "2.0",
+  "case_inventory": {
+    "total": 56,
+    "runnable": 50,
+    "capability_gated": 6,
+    "development": 33,
+    "held_out": 23,
+    "gated_by_category": {
+      "prompt_injection": 2,
+      "stale_version": 2,
+      "tenant_isolation": 2
+    },
+    "gated_cases": [
+      {
+        "id": "future-stale-latest",
+        "split": "held_out",
+        "category": "stale_version",
+        "skip_reason": "Document version metadata and latest-version filtering are implemented in Phase A1."
+      },
+      {
+        "id": "future-stale-superseded",
+        "split": "development",
+        "category": "stale_version",
+        "skip_reason": "Document version metadata and latest-version filtering are implemented in Phase A1."
+      },
+      {
+        "id": "future-injection-source",
+        "split": "held_out",
+        "category": "prompt_injection",
+        "skip_reason": "Adversarial source fixtures and prompt-injection defenses are implemented in security experiment E10."
+      },
+      {
+        "id": "future-injection-exfiltration",
+        "split": "development",
+        "category": "prompt_injection",
+        "skip_reason": "Adversarial source fixtures and prompt-injection defenses are implemented in security experiment E10."
+      },
+      {
+        "id": "future-tenant-a",
+        "split": "held_out",
+        "category": "tenant_isolation",
+        "skip_reason": "Tenant identity, ACL metadata, and deny-by-default filtering are implemented in Phase B."
+      },
+      {
+        "id": "future-tenant-b",
+        "split": "development",
+        "category": "tenant_isolation",
+        "skip_reason": "Tenant identity, ACL metadata, and deny-by-default filtering are implemented in Phase B."
+      }
+    ]
+  },
+  "profiles": {
+    "dense": {
+      "overall": {
+        "cases": 50,
+        "answerable_cases": 46,
+        "unanswerable_cases": 4,
+        "mrr_at_5": 0.942,
+        "recall_at_5": 0.9239,
+        "ndcg_at_5": 0.916,
+        "no_answer_accuracy": 0.25,
+        "p50_retrieval_ms": 22,
+        "p95_retrieval_ms": 75,
+        "p50_total_ms": 28,
+        "p95_total_ms": 85
+      },
+      "by_split": {
+        "development": {
+          "cases": 30,
+          "answerable_cases": 28,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.9643,
+          "recall_at_5": 0.9286,
+          "ndcg_at_5": 0.9338,
+          "no_answer_accuracy": 0.5,
+          "p50_retrieval_ms": 22,
+          "p95_retrieval_ms": 81,
+          "p50_total_ms": 28,
+          "p95_total_ms": 100
+        },
+        "held_out": {
+          "cases": 20,
+          "answerable_cases": 18,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.9074,
+          "recall_at_5": 0.9167,
+          "ndcg_at_5": 0.8883,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 24,
+          "p95_retrieval_ms": 73,
+          "p50_total_ms": 30,
+          "p95_total_ms": 79
+        }
+      },
+      "by_category": {
+        "boundary": {
+          "cases": 9,
+          "answerable_cases": 9,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 21,
+          "p95_retrieval_ms": 75,
+          "p50_total_ms": 27,
+          "p95_total_ms": 81
+        },
+        "collection_filter": {
+          "cases": 2,
+          "answerable_cases": 0,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.0,
+          "recall_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 29,
+          "p95_retrieval_ms": 30,
+          "p50_total_ms": 40,
+          "p95_total_ms": 43
+        },
+        "exact": {
+          "cases": 17,
+          "answerable_cases": 17,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 0.9412,
+          "recall_at_5": 0.9118,
+          "ndcg_at_5": 0.9184,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 21,
+          "p95_retrieval_ms": 134,
+          "p50_total_ms": 28,
+          "p95_total_ms": 137
+        },
+        "multi_document": {
+          "cases": 4,
+          "answerable_cases": 4,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 0.75,
+          "ndcg_at_5": 0.7558,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 70,
+          "p95_retrieval_ms": 81,
+          "p50_total_ms": 80,
+          "p95_total_ms": 85
+        },
+        "paraphrase": {
+          "cases": 14,
+          "answerable_cases": 14,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 0.881,
+          "recall_at_5": 0.9286,
+          "ndcg_at_5": 0.8929,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 21,
+          "p95_retrieval_ms": 64,
+          "p50_total_ms": 27,
+          "p95_total_ms": 70
+        },
+        "table": {
+          "cases": 2,
+          "answerable_cases": 2,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 42,
+          "p95_retrieval_ms": 57,
+          "p50_total_ms": 50,
+          "p95_total_ms": 64
+        },
+        "unanswerable": {
+          "cases": 2,
+          "answerable_cases": 0,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.0,
+          "recall_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "no_answer_accuracy": 0.5,
+          "p50_retrieval_ms": 27,
+          "p95_retrieval_ms": 37,
+          "p50_total_ms": 34,
+          "p95_total_ms": 46
+        }
+      }
+    },
+    "hybrid": {
+      "overall": {
+        "cases": 50,
+        "answerable_cases": 46,
+        "unanswerable_cases": 4,
+        "mrr_at_5": 0.9674,
+        "recall_at_5": 1.0,
+        "ndcg_at_5": 0.9698,
+        "no_answer_accuracy": 0.25,
+        "p50_retrieval_ms": 42,
+        "p95_retrieval_ms": 71,
+        "p50_total_ms": 48,
+        "p95_total_ms": 79
+      },
+      "by_split": {
+        "development": {
+          "cases": 30,
+          "answerable_cases": 28,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.9821,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9811,
+          "no_answer_accuracy": 0.5,
+          "p50_retrieval_ms": 38,
+          "p95_retrieval_ms": 71,
+          "p50_total_ms": 45,
+          "p95_total_ms": 78
+        },
+        "held_out": {
+          "cases": 20,
+          "answerable_cases": 18,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.9444,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9522,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 48,
+          "p95_retrieval_ms": 69,
+          "p50_total_ms": 54,
+          "p95_total_ms": 79
+        }
+      },
+      "by_category": {
+        "boundary": {
+          "cases": 9,
+          "answerable_cases": 9,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 47,
+          "p95_retrieval_ms": 62,
+          "p50_total_ms": 52,
+          "p95_total_ms": 69
+        },
+        "collection_filter": {
+          "cases": 2,
+          "answerable_cases": 0,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.0,
+          "recall_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 48,
+          "p95_retrieval_ms": 52,
+          "p50_total_ms": 60,
+          "p95_total_ms": 64
+        },
+        "exact": {
+          "cases": 17,
+          "answerable_cases": 17,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 0.9706,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9736,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 38,
+          "p95_retrieval_ms": 74,
+          "p50_total_ms": 43,
+          "p95_total_ms": 83
+        },
+        "multi_document": {
+          "cases": 4,
+          "answerable_cases": 4,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9492,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 51,
+          "p95_retrieval_ms": 65,
+          "p50_total_ms": 57,
+          "p95_total_ms": 75
+        },
+        "paraphrase": {
+          "cases": 14,
+          "answerable_cases": 14,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 0.9286,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9473,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 42,
+          "p95_retrieval_ms": 77,
+          "p50_total_ms": 48,
+          "p95_total_ms": 84
+        },
+        "table": {
+          "cases": 2,
+          "answerable_cases": 2,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 56,
+          "p95_retrieval_ms": 69,
+          "p50_total_ms": 63,
+          "p95_total_ms": 75
+        },
+        "unanswerable": {
+          "cases": 2,
+          "answerable_cases": 0,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.0,
+          "recall_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "no_answer_accuracy": 0.5,
+          "p50_retrieval_ms": 48,
+          "p95_retrieval_ms": 60,
+          "p50_total_ms": 63,
+          "p95_total_ms": 79
+        }
+      }
+    },
+    "hybrid-reranked": {
+      "overall": {
+        "cases": 50,
+        "answerable_cases": 46,
+        "unanswerable_cases": 4,
+        "mrr_at_5": 0.9583,
+        "recall_at_5": 1.0,
+        "ndcg_at_5": 0.9626,
+        "no_answer_accuracy": 0.25,
+        "p50_retrieval_ms": 1435,
+        "p95_retrieval_ms": 2080,
+        "p50_total_ms": 1489,
+        "p95_total_ms": 2139
+      },
+      "by_split": {
+        "development": {
+          "cases": 30,
+          "answerable_cases": 28,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.9732,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9724,
+          "no_answer_accuracy": 0.5,
+          "p50_retrieval_ms": 1327,
+          "p95_retrieval_ms": 1937,
+          "p50_total_ms": 1372,
+          "p95_total_ms": 2088
+        },
+        "held_out": {
+          "cases": 20,
+          "answerable_cases": 18,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.9352,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9473,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 1519,
+          "p95_retrieval_ms": 2132,
+          "p50_total_ms": 1525,
+          "p95_total_ms": 2139
+        }
+      },
+      "by_category": {
+        "boundary": {
+          "cases": 9,
+          "answerable_cases": 9,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 0.9444,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.959,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 1395,
+          "p95_retrieval_ms": 2038,
+          "p50_total_ms": 1400,
+          "p95_total_ms": 2045
+        },
+        "collection_filter": {
+          "cases": 2,
+          "answerable_cases": 0,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.0,
+          "recall_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 1435,
+          "p95_retrieval_ms": 1712,
+          "p50_total_ms": 1455,
+          "p95_total_ms": 1746
+        },
+        "exact": {
+          "cases": 17,
+          "answerable_cases": 17,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 0.9559,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9618,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 1299,
+          "p95_retrieval_ms": 2080,
+          "p50_total_ms": 1511,
+          "p95_total_ms": 2498
+        },
+        "multi_document": {
+          "cases": 4,
+          "answerable_cases": 4,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9492,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 1794,
+          "p95_retrieval_ms": 2132,
+          "p50_total_ms": 1809,
+          "p95_total_ms": 2139
+        },
+        "paraphrase": {
+          "cases": 14,
+          "answerable_cases": 14,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 0.9524,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 0.9643,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 1365,
+          "p95_retrieval_ms": 1647,
+          "p50_total_ms": 1372,
+          "p95_total_ms": 1654
+        },
+        "table": {
+          "cases": 2,
+          "answerable_cases": 2,
+          "unanswerable_cases": 0,
+          "mrr_at_5": 1.0,
+          "recall_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "no_answer_accuracy": 0.0,
+          "p50_retrieval_ms": 1538,
+          "p95_retrieval_ms": 1538,
+          "p50_total_ms": 1549,
+          "p95_total_ms": 1552
+        },
+        "unanswerable": {
+          "cases": 2,
+          "answerable_cases": 0,
+          "unanswerable_cases": 2,
+          "mrr_at_5": 0.0,
+          "recall_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "no_answer_accuracy": 0.5,
+          "p50_retrieval_ms": 1318,
+          "p95_retrieval_ms": 2513,
+          "p50_total_ms": 1340,
+          "p95_total_ms": 2523
+        }
+      }
+    }
+  },
+  "run": {
+    "generated_at": "2026-07-30T17:50:59.514672+00:00",
+    "dataset": "evals/golden.jsonl",
+    "dataset_sha256": "1f31cb1885115f4fb4e8a5c418ecaae55ea88cd67861fa1173905d1335434f14",
+    "manifest": "evals/experiment-manifest.json",
+    "manifest_sha256": "635331f5623e94115a4f50da4644d35e8698616ca0ae072da670128344ce305e",
+    "profiles": [
+      "dense",
+      "hybrid",
+      "hybrid-reranked"
+    ],
+    "embedding_provider": "fastembed",
+    "reranker_provider": "colbert",
+    "generation_provider": "extractive",
+    "estimated_provider_cost_usd": 0.0,
+    "cost_note": "Local deterministic or local model execution; hosted API cost is zero.",
+    "index_build_ms": 2721,
+    "traced_python_peak_memory_mb": 3.04,
+    "memory_note": "Python allocator peak; native model/runtime memory is excluded.",
+    "python": "3.11.9",
+    "platform": "Windows-10-10.0.26200-SP0"
+  }
+}

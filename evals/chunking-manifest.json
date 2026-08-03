@@ -1,0 +1,28 @@
+{
+  "experiment": "atlas-chunking-bakeoff",
+  "version": "2026-07-30",
+  "controlled_variables": {
+    "retrieval_profiles": [
+      "sparse",
+      "hybrid"
+    ],
+    "top_k": 5,
+    "candidate_k": 24,
+    "chunk_size": 950,
+    "chunk_overlap": 140,
+    "generation_provider": "extractive"
+  },
+  "profiles": {
+    "fixed": "Character windows with word-boundary overlap.",
+    "heading-aware": "Markdown sections kept intact when possible; heading repeated when a section splits.",
+    "parent-child": "Smaller child text is indexed; the containing section is returned as citation context.",
+    "docling-hybrid": "Docling document hierarchy with BGE-tokenizer-aware splitting, heading context, and peer merging."
+  },
+  "adoption_gate": "Promote only when held-out retrieval quality improves for a relevant category without unacceptable index, latency, or implementation cost.",
+  "notes": [
+    "All profiles use the same extraction output and frozen evaluation cases.",
+    "Sparse and hybrid retrieval are run separately; the profile is recorded in each output artifact.",
+    "Parent-child search results are deduplicated by returned parent context.",
+    "The controlled corpus includes multiple sections, distractors, Markdown tables, and multi-document questions."
+  ]
+}

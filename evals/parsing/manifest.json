@@ -1,0 +1,98 @@
+{
+  "schema_version": "1.0",
+  "upstream": {
+    "repository": "https://github.com/docling-project/docling",
+    "commit": "91fa745b3228fa0df0510d76eb94956b063054e1",
+    "additional_fixture_commit": "52d8a6f24de7318a9ad4be2a7361ba93fc81a5c1",
+    "license": "MIT",
+    "source_path": "tests/data/pdf/sources",
+    "groundtruth_path": "tests/data/pdf/groundtruth",
+    "note": "The upstream Markdown is a useful structured reference but favors Docling's representation. Token overlap is therefore diagnostic, not a neutral winner metric. Scanned PDF, DOCX, and HTML fixtures are pinned to additional_fixture_commit."
+  },
+  "fixtures": [
+    {
+      "id": "code_and_formula",
+      "document_class": "code-and-formula",
+      "source": "sources/code_and_formula.pdf",
+      "reference": "groundtruth/code_and_formula.md",
+      "anchors": [
+        "JavaScript Code Example",
+        "function add(a, b)",
+        "Listing 1: Simple JavaScript Program",
+        "Formula"
+      ]
+    },
+    {
+      "id": "multi_page",
+      "document_class": "long-form-text",
+      "source": "sources/multi_page.pdf",
+      "reference": "groundtruth/multi_page.md",
+      "anchors": [
+        "The Evolution of the Word Processor",
+        "IBM MT/ST",
+        "Google Docs (2006)",
+        "Future of Word Processing"
+      ]
+    },
+    {
+      "id": "normal_4pages",
+      "document_class": "multilingual-table",
+      "source": "sources/normal_4pages.pdf",
+      "reference": "groundtruth/normal_4pages.md",
+      "anchors": [
+        "코로나-19",
+        "감염병",
+        "U코드",
+        "MERS"
+      ]
+    },
+    {
+      "id": "table_mislabeled_as_picture",
+      "document_class": "layout-and-table",
+      "source": "sources/table_mislabeled_as_picture.pdf",
+      "reference": "groundtruth/table_mislabeled_as_picture.md",
+      "anchors": [
+        "maximum caseload per lawyer",
+        "university-based student law clinics",
+        "State funded legal aid",
+        "Internally displaced persons"
+      ]
+    },
+    {
+      "id": "ocr_test",
+      "document_class": "scanned-pdf",
+      "source": "sources/ocr_test.pdf",
+      "reference": "groundtruth/ocr_test.md",
+      "anchors": [
+        "Docling bundles PDF document conversion",
+        "JSON and Markdown",
+        "self contained package"
+      ]
+    },
+    {
+      "id": "word_tables",
+      "document_class": "office-docx-rich-tables",
+      "source": "sources/word_tables.docx",
+      "reference": "groundtruth/word_tables.md",
+      "anchors": [
+        "Test with tables",
+        "Merged Cell 4.4 5.4",
+        "vertical span over a row starting late",
+        "Cell 8.4"
+      ]
+    },
+    {
+      "id": "html_rich_table_cells",
+      "document_class": "html-rich-tables",
+      "source": "sources/html_rich_table_cells.html",
+      "reference": "groundtruth/html_rich_table_cells.md",
+      "anchors": [
+        "Rich Table Cells in HTML",
+        "Goose (not a duck!)",
+        "Fulvous Whistling Duck",
+        "quaaaaaack",
+        "Mandarin Duck"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0",
+  "experiment": "atlas-retrieval-baseline",
+  "dataset": {
+    "path": "evals/golden.jsonl",
+    "version": "2026-07-30",
+    "split_policy": "Frozen, hand-reviewed development and held_out labels. Do not tune against held_out failures.",
+    "inventory": {
+      "total_cases": 56,
+      "runnable_cases": 50,
+      "capability_gated_cases": 6,
+      "development_cases": 33,
+      "held_out_cases": 23
+    }
+  },
+  "corpus": {
+    "path": "data/sample_documents",
+    "documents": 6,
+    "format": "Markdown",
+    "note": "Small controlled corpus for retrieval experiments; not a production benchmark."
+  },
+  "retrieval": {
+    "profiles": [
+      "dense",
+      "sparse",
+      "hybrid",
+      "hybrid-reranked"
+    ],
+    "top_k": 5,
+    "candidate_k": 24,
+    "local_baseline": {
+      "embedding_provider": "hash",
+      "reranker_provider": "lexical"
+    },
+    "semantic_baseline": {
+      "embedding_provider": "fastembed",
+      "embedding_model": "BAAI/bge-small-en-v1.5",
+      "reranker_provider": "colbert",
+      "reranker_model": "answerdotai/answerai-colbert-small-v1"
+    }
+  },
+  "metrics": [
+    "MRR@5",
+    "Recall@5",
+    "nDCG@5",
+    "no-answer accuracy",
+    "p50 and p95 retrieval latency",
+    "p50 and p95 end-to-end latency",
+    "index build time",
+    "traced Python peak memory"
+  ],
+  "adoption_rule": "A technique is promoted only when it improves held-out quality or an explicit operational constraint without an unacceptable latency, cost, memory, or complexity regression.",
+  "reproducibility": {
+    "generation_provider": "extractive",
+    "hosted_api_cost_usd": 0,
+    "raw_case_export": "JSONL",
+    "aggregate_export": "JSON"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "rest": {
+    "RestGenerator": {
+      "name": "Atlas query API",
+      "uri": "http://127.0.0.1:8000/api/query",
+      "method": "post",
+      "headers": {
+        "Content-Type": "application/json",
+        "X-Atlas-Tenant": "security-scan",
+        "X-Atlas-Principal": "garak"
+      },
+      "req_template_json_object": {
+        "question": "$INPUT"
+      },
+      "response_json": true,
+      "response_json_field": "answer",
+      "request_timeout": 60,
+      "skip_codes": [
+        422
+      ]
+    }
+  }
+}

@@ -1,0 +1,68 @@
+name: Quality parser
+
+# The Docling route is the measured parser for scanned PDFs, DOCX and
+# structured HTML, but it ships in an optional extra that pulls a large model
+# stack. Installing it on every push would slow the main suite for a dependency
+# most changes do not touch, so it runs here instead: on demand, on a weekly
+# schedule, and whenever the parser code or its pinned fixtures change.
+#
+# The point is that the shipped Docling adapter is never unexecuted code.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 4 * * 1"
+  push:
+    paths:
+      - "app/parsers.py"
+      - "app/parsing_benchmark.py"
+      - "tests/test_parser_registry.py"
+      - "evals/parsing/**"
+      - "pyproject.toml"
+      - ".github/workflows/quality-parser.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  docling:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+          cache: pip
+      # docling-ibm-models loads TableFormer through OpenCV, which needs these
+      # system libraries. Without them the quality route fails at parse time
+      # with `ImportError: libxcb.so.1`.
+      - name: Install the OpenCV system libraries
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq \
+            libgl1 libglib2.0-0 libxcb1 libxext6 libsm6 libxrender1
+      - run: python -m pip install --upgrade pip
+      # Docling depends on torch. Its default wheel drags in roughly 4 GB of
+      # CUDA packages that a CPU-only parsing job never uses, so pin the CPU
+      # build first and let the extra resolve against it.
+      - run: pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+      - run: pip install -e ".[dev]" "docling[rapidocr]>=2.117,<3"
+      - name: Confirm the quality route is installed
+        run: |
+          python - <<'PY'
+          from app.parsers import DoclingParser
+          assert DoclingParser.available(), "Docling did not import"
+          print("docling available")
+          PY
+      - name: Exercise the parser registry with the quality route present
+        run: pytest tests/test_parser_registry.py -o addopts= -v
+      - name: Record the routing decisions on the pinned fixtures
+        run: |
+          python -m app.parsing_benchmark \
+            --providers atlas-registry \
+            --output parser-registry-docling.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: parser-registry-docling
+          path: parser-registry-docling.json

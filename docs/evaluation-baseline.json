@@ -1,0 +1,29 @@
+{
+  "dataset": "evals/golden.jsonl",
+  "embedding_provider": "hash",
+  "reranker_provider": "lexical",
+  "purpose": "Deterministic offline regression baseline; not a claim about external corpora.",
+  "results": {
+    "dense": {
+      "answerable_cases": 8,
+      "mrr_at_5": 1.0,
+      "recall_at_5": 0.9375,
+      "no_answer_accuracy": 1.0,
+      "median_retrieval_ms": 2
+    },
+    "hybrid": {
+      "answerable_cases": 8,
+      "mrr_at_5": 1.0,
+      "recall_at_5": 1.0,
+      "no_answer_accuracy": 1.0,
+      "median_retrieval_ms": 6
+    },
+    "hybrid-reranked": {
+      "answerable_cases": 8,
+      "mrr_at_5": 1.0,
+      "recall_at_5": 1.0,
+      "no_answer_accuracy": 1.0,
+      "median_retrieval_ms": 5
+    }
+  }
+}

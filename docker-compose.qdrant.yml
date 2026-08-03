@@ -1,0 +1,25 @@
+services:
+  atlas-knowledge:
+    environment:
+      ATLAS_QDRANT_MODE: server
+      ATLAS_QDRANT_URL: http://qdrant:6333
+    depends_on:
+      qdrant:
+        condition: service_healthy
+
+  qdrant:
+    image: qdrant/qdrant@sha256:0bd98fa7977f1e75694779359ca4e212822e5a71334e28421182f72f209d5286
+    ports:
+      - "127.0.0.1:6333:6333"
+    volumes:
+      - atlas-qdrant-data:/qdrant/storage
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "timeout 5 bash -c '</dev/tcp/127.0.0.1/6333'"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+
+volumes:
+  atlas-qdrant-data:

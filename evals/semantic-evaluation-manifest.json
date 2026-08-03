@@ -1,0 +1,56 @@
+{
+  "experiment": "atlas-semantic-citation-evaluation",
+  "version": "2026-07-31",
+  "dataset": "evals/golden.jsonl",
+  "selection": {
+    "split": "held_out",
+    "cases": 20,
+    "reason": "Use the untouched held-out split for the release gate; development cases remain available for iteration."
+  },
+  "controlled_variables": {
+    "retrieval_profile": "sparse",
+    "chunking_profile": "fixed",
+    "embedding_provider": "hash",
+    "generation_provider": "extractive",
+    "top_k": 5
+  },
+  "semantic_judge": {
+    "provider": "local-hhem",
+    "model": "vectara/hallucination_evaluation_model",
+    "model_revision": "8e4a2e6e96c708cc76c2344f7e4757df2515292c",
+    "threshold": 0.5,
+    "scope": "Claim support against the cited passage and against the union of passages cited by each answer statement."
+  },
+  "metrics": {
+    "citation_validity": "Every emitted source rank exists in the response source list.",
+    "citation_completeness": "Every factual answer statement has at least one source rank.",
+    "exact_citation_support": "The normalized extractive statement occurs in every passage it cites.",
+    "semantic_citation_support": "HHEM support score for each statement/cited-passage pair.",
+    "semantic_answer_faithfulness": "HHEM support score for each statement against the union of its cited passages.",
+    "no_answer_accuracy": "Unanswerable cases return no sources and the explicit no-answer response."
+  },
+  "controls": {
+    "supported": {
+      "premise": "Approved refunds return to the original payment method.",
+      "hypothesis": "Approved refunds return to the original payment method."
+    },
+    "unsupported": {
+      "premise": "Approved refunds return to the original payment method.",
+      "hypothesis": "Approved refunds are always paid in cryptocurrency."
+    }
+  },
+  "gate": {
+    "citation_validity": 1.0,
+    "citation_completeness": 1.0,
+    "exact_citation_support": 1.0,
+    "mean_semantic_citation_support": 0.5,
+    "mean_semantic_answer_faithfulness": 0.5,
+    "control_supported_min": 0.5,
+    "control_unsupported_max": 0.5
+  },
+  "notes": [
+    "The local HHEM judge requires no API key and no client document leaves the machine.",
+    "HHEM measures support, not whether the answer is useful or complete; retrieval and no-answer metrics remain separate.",
+    "The extractive generator makes exact span support testable, while HHEM provides a semantic check that can be reused with abstractive generators."
+  ]
+}

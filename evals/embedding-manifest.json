@@ -1,0 +1,49 @@
+{
+  "experiment": "atlas-embedding-bakeoff",
+  "version": "2026-07-30",
+  "controlled_variables": {
+    "dataset": "evals/golden.jsonl",
+    "chunking_profile": "fixed",
+    "retrieval_profiles": [
+      "dense",
+      "hybrid"
+    ],
+    "top_k": 5,
+    "candidate_k": 24,
+    "generation_provider": "extractive",
+    "reranker_provider": "lexical"
+  },
+  "candidates": {
+    "bge-small": {
+      "provider": "fastembed",
+      "model": "BAAI/bge-small-en-v1.5",
+      "dimensions": 384,
+      "execution": "local",
+      "input_price_usd_per_million": 0.0
+    },
+    "bge-m3": {
+      "provider": "sentence-transformers",
+      "model": "BAAI/bge-m3",
+      "dimensions": 1024,
+      "execution": "local",
+      "input_price_usd_per_million": 0.0
+    },
+    "openai-large-1024": {
+      "provider": "openai-compatible",
+      "model": "text-embedding-3-large",
+      "dimensions": 1024,
+      "execution": "credentialed",
+      "credential_env": "ATLAS_EMBEDDING_API_KEY",
+      "base_url": "https://api.openai.com/v1",
+      "input_price_usd_per_million": 0.13,
+      "pricing_observed_at": "2026-07-30",
+      "pricing_source": "https://developers.openai.com/api/docs/models/text-embedding-3-large"
+    }
+  },
+  "adoption_gate": "Promote only when held-out retrieval quality improves enough to justify index size, latency, memory, provider cost, and operational complexity.",
+  "notes": [
+    "BGE-M3 is shortlisted for multilingual, long-context, dense/sparse/multi-vector capability; this experiment isolates its dense representation.",
+    "OpenAI text-embedding-3-large is shortlisted as the current most-capable hosted OpenAI embedding model and shortened to 1024 dimensions for a like-sized hosted comparison.",
+    "A missing hosted credential is recorded as credential_required rather than silently substituting a model or fabricating a result."
+  ]
+}

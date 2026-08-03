@@ -1,0 +1,655 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-07-30T21:10:57.706410+00:00",
+  "manifest": {
+    "experiment": "atlas-embedding-bakeoff",
+    "version": "2026-07-30",
+    "controlled_variables": {
+      "dataset": "evals/golden.jsonl",
+      "chunking_profile": "fixed",
+      "retrieval_profiles": [
+        "dense",
+        "hybrid"
+      ],
+      "top_k": 5,
+      "candidate_k": 24,
+      "generation_provider": "extractive",
+      "reranker_provider": "lexical"
+    },
+    "candidates": {
+      "bge-small": {
+        "provider": "fastembed",
+        "model": "BAAI/bge-small-en-v1.5",
+        "dimensions": 384,
+        "execution": "local",
+        "input_price_usd_per_million": 0.0
+      },
+      "bge-m3": {
+        "provider": "sentence-transformers",
+        "model": "BAAI/bge-m3",
+        "dimensions": 1024,
+        "execution": "local",
+        "input_price_usd_per_million": 0.0
+      },
+      "openai-large-1024": {
+        "provider": "openai-compatible",
+        "model": "text-embedding-3-large",
+        "dimensions": 1024,
+        "execution": "credentialed",
+        "credential_env": "ATLAS_EMBEDDING_API_KEY",
+        "base_url": "https://api.openai.com/v1",
+        "input_price_usd_per_million": 0.13,
+        "pricing_observed_at": "2026-07-30",
+        "pricing_source": "https://developers.openai.com/api/docs/models/text-embedding-3-large"
+      }
+    },
+    "adoption_gate": "Promote only when held-out retrieval quality improves enough to justify index size, latency, memory, provider cost, and operational complexity.",
+    "notes": [
+      "BGE-M3 is shortlisted for multilingual, long-context, dense/sparse/multi-vector capability; this experiment isolates its dense representation.",
+      "OpenAI text-embedding-3-large is shortlisted as the current most-capable hosted OpenAI embedding model and shortened to 1024 dimensions for a like-sized hosted comparison.",
+      "A missing hosted credential is recorded as credential_required rather than silently substituting a model or fabricating a result."
+    ]
+  },
+  "dataset": "evals/golden.jsonl",
+  "runtime": {
+    "python": "3.11.9",
+    "platform": "Windows-10-10.0.26200-SP0"
+  },
+  "results": {
+    "bge-small": {
+      "status": "completed",
+      "provider": "fastembed",
+      "model": "BAAI/bge-small-en-v1.5",
+      "dimensions": 384,
+      "model_load_ms": 611,
+      "index_build_ms": 2482,
+      "indexed_chunks": 19,
+      "index_disk_bytes": 205381,
+      "traced_python_peak_memory_mb": 1.69,
+      "memory_note": "Python allocator peak; native model/runtime memory is excluded.",
+      "rss_before_mb": 146.35,
+      "rss_after_model_load_mb": 276.27,
+      "rss_after_evaluation_mb": 305.02,
+      "rss_note": "Resident-set snapshots include the Python runtime and shared native allocations; compare directionally on the recorded machine.",
+      "input_tokens": 0,
+      "estimated_provider_cost_usd": 0.0,
+      "quality_metrics": {
+        "dense": {
+          "overall": {
+            "cases": 50,
+            "answerable_cases": 46,
+            "unanswerable_cases": 4,
+            "mrr_at_5": 0.942,
+            "recall_at_5": 0.9239,
+            "ndcg_at_5": 0.916,
+            "no_answer_accuracy": 0.25,
+            "p50_retrieval_ms": 26,
+            "p95_retrieval_ms": 51,
+            "p50_total_ms": 35,
+            "p95_total_ms": 59
+          },
+          "by_split": {
+            "development": {
+              "cases": 30,
+              "answerable_cases": 28,
+              "unanswerable_cases": 2,
+              "mrr_at_5": 0.9643,
+              "recall_at_5": 0.9286,
+              "ndcg_at_5": 0.9338,
+              "no_answer_accuracy": 0.5,
+              "p50_retrieval_ms": 26,
+              "p95_retrieval_ms": 50,
+              "p50_total_ms": 34,
+              "p95_total_ms": 58
+            },
+            "held_out": {
+              "cases": 20,
+              "answerable_cases": 18,
+              "unanswerable_cases": 2,
+              "mrr_at_5": 0.9074,
+              "recall_at_5": 0.9167,
+              "ndcg_at_5": 0.8883,
+              "no_answer_accuracy": 0.0,
+              "p50_retrieval_ms": 26,
+              "p95_retrieval_ms": 51,
+              "p50_total_ms": 35,
+              "p95_total_ms": 59
+            }
+          },
+          "by_category": {
+            "boundary": {
+              "cases": 9,
+              "answerable_cases": 9,
+              "unanswerable_cases": 0,
+              "mrr_at_5": 1.0,
+              "recall_at_5": 1.0,
+              "ndcg_at_5": 1.0,
+              "no_answer_accuracy": 0.0,
+              "p50_retrieval_ms": 26,
+              "p95_retrieval_ms": 51,
+              "p50_total_ms": 34,
+              "p95_total_ms": 58
+            },
+            "collection_filter": {
+              "cases": 2,
+              "answerable_cases": 0,
+              "unanswerable_cases": 2,
+              "mrr_at_5": 0.0,
+              "recall_at_5": 0.0,
+              "ndcg_at_5": 0.0,
+              "no_answer_accuracy": 0.0,
+              "p50_retrieval_ms": 30,
+              "p95_retrieval_ms": 38,
+              "p50_total_ms": 41,
+              "p95_total_ms": 55
+            },
+            "exact": {
+              "cases": 17,
+              "answerable_cases": 17,
+              "unanswerable_cases": 0,
+              "mrr_at_5": 0.9412,
+              "recall_at_5": 0.9118,
+              "ndcg_at_5": 0.9184,
+              "no_answer_accuracy": 0.0,
+              "p50_retrieval_ms": 25,
+              "p95_retrieval_ms": 53,
+              "p50_total_ms": 35,
+              "p95_total_ms": 61
+            },
+            "multi_document": {
+              "cases": 4,
+              "answerable_cases": 4,
+              "unanswerable_cases": 0,
+              "mrr_at_5": 1.0,
+              "recall_at_5": 0.75,
+              "ndcg_at_5": 0.7558,
+              "no_answer_accuracy": 0.0,
+              "p50_retrieval_ms": 26,
+              "p95_retrieval_ms": 35,
+              "p50_total_ms": 32,
+              "p95_total_ms": 41
+            },
+            "paraphrase": {
+              "cases": 14,
+              "answerable_cases": 14,
+              "unanswerable_cases": 0,
+              "mrr_at_5": 0.881,
+              "recall_at_5": 0.9286,
+              "ndcg_at_5": 0.8929,
+              "no_answer_accuracy": 0.0,
+              "p50_retrieval_ms": 28,
+              "p95_retrieval_ms": 61,
+              "p50_total_ms": 38,
+              "p95_total_ms": 69
+            },
+            "table": {
+              "cases": 2,
+              "answerable_cases": 2,
+              "unanswerable_cases": 0,
+              "mrr_at_5": 1.0,
+              "recall_at_5": 1.0,
+              "ndcg_at_5": 1.0,
+              "no_answer_accuracy": 0.0,
+              "p50_retrieval_ms": 34,
+              "p95_retrieval_ms": 48,
+              "p50_total_ms": 42,
+              "p95_total_ms": 59
+            },
+            "unanswerable": {
+              "cases": 2,
+              "answerable_cases": 0,
+              "unanswerable_cases": 2,
+              "mrr_at_5": 0.0,
+              "recall_at_5": 0.0,
+              "ndcg_at_5": 0.0,
+              "no_answer_accuracy": 0.5,
+              "p50_retrieval_ms": 22,
+              "p95_retrieval_ms": 26,
+              "p50_total_ms": 33,
+              "p95_total_ms": 35
+            }
+          }
+        },
+        "hybrid": {
+          "overall": {
+            "cases": 50,
+            "answerable_cases": 46,
+            "unanswerable_cases": 4,
+            "mrr_at_5": 0.9674,
+            "recall_at_5": 1.0,
+            "ndcg_at_5": 0.9698,
+            "no_answer_accuracy": 0.25,
+            "p50_retrieval_ms": 64,
+            "p95_retrieval_ms": 89,
+            "p50_total_ms": 74,
+            "p95_total_ms": 97
+          },
+          "by_split": {
+            "development": {
+              "cases": 30,
+              "answerable_cases": 28,
+              "unanswerable_cases": 2,
+              "mrr_at_5": 0.9821,
+              "recall_at_5": 1.0,
+              "ndcg_at_5": 0.9811,
+              "no_answer_accuracy": 0.5,
+              "p50_retrieval_ms": 64,
+              "p95_retrieval_ms": 90,
+              "p50_total_ms": 75,
+              "p95_total_ms": 98
+            },
+            "held_out": {
+              "cases": 20,
+              "answerable_cases": 18,
+              "unanswerable_cases": 2,
+              "mrr_at_5": 0.9444,
+              "recall_at_5": 1.0,
+              "ndcg_at_5": 0.9522,
+              "no_answer_accuracy": 0.0,
+              "p50_retrieval_ms": 64,
+              "p95_retrieval_ms": 74,
+              "p50_total_ms": 73,
+              "p95_total_ms": 83
+            }
+          },
+          "by_category": {
+            "boundary": {
+              "cases": 9,
+              "answerable_cases": 9,
+              "unanswerable_cases": 0,
+              "mrr_at_5": 1.0,
+              "recall_at_5": 1.0,
+              "ndcg_at_5": 1.0,
+              "no_answer_accuracy": 0.0,
+              "p50_retrieval_ms": 66,
+              "p95_retrieval_ms": 82,
+              "p50_total_ms": 74,
+              "p95_total_ms": 89
+            },
+            "collection_filter": {
+              "cases": 2,
+              "answerable_cases": 0,
+              "unanswerable_cases": 2,
+              "mrr_at_5": 0.0,
+              "recall_at_5": 0.0,
+              "ndcg_at_5": 0.0,
+              "no_answer_accuracy": 0.0,
+              "p50_retrieval_ms": 58,
+              "p95_retrieval_ms": 68,
+              "p50_total_ms": 66,
+              "p95_total_ms": 77
+            },
+            "exact": {
+              "cases": 17,
+              "answerable_cases": 17,
+              "unanswerable_cases": 0,
+              "mrr_at_5": 0.9706,
+              "recall_at_5": 1.0,
+              "ndcg_at_5": 0.9736,
+              "no_answer_accuracy": 0.0,
+              "p50_retrieval_ms": 63,
+              "p95_retrieval_ms": 99,
+              "p50_total_ms": 71,
+              "p95_total_ms": 108
+            },
+            "multi_document": {
+              "cases": 4,
+              "answerable_cases": 4,
+              "unanswerable_cases": 0,
+              "mrr_at_5": 1.0,
+              "recall_at_5": 1.0,
+              "ndcg_at_5": 0.9492,
+              "no_answer_accuracy": 0.0,
+              "p50_retrieval_ms": 62,
+              "p95_retrieval_ms": 76,
+              "p50_total_ms": 70,
+              "p95_total_ms": 82
+            },
+            "paraphrase": {
+              "cases": 14,
+              "answerable_cases": 14,
+              "unanswerable_cases": 0,
+              "mrr_at_5": 0.9286,
+              "recall_at_5": 1.0,
+              "ndcg_at_5": 0.9473,
+              "no_answer_accuracy": 0.0,
+              "p50_retrieval_ms": 64,
+              "p95_retrieval_ms": 90,
+              "p50_total_ms": 74,
+              "p95_total_ms": 98
+            },
+            "table": {
+              "cases": 2,
+              "answerable_cases": 2,
+              "unanswerable_cases": 0,
+              "mrr_at_5": 1.0,
+              "recall_at_5": 1.0,
+              "ndcg_at_5": 1.0,
+              "no_answer_accuracy": 0.0,
+              "p50_retrieval_ms": 71,
+              "p95_retrieval_ms": 87,
+              "p50_total_ms": 78,
+              "p95_total_ms": 95
+            },
+            "unanswerable": {
+              "cases": 2,
+              "answerable_cases": 0,
+              "unanswerable_cases": 2,
+              "mrr_at_5": 0.0,
+              "recall_at_5": 0.0,
+              "ndcg_at_5": 0.0,
+              "no_answer_accuracy": 0.5,
+              "p50_retrieval_ms": 58,
+              "p95_retrieval_ms": 66,
+              "p50_total_ms": 70,
+              "p95_total_ms": 81
+            }
+          }
+        }
+      }
+    },
+    "bge-m3": {
+      "status": "completed",
+      "provider": "sentence-transformers",
+      "model": "BAAI/bge-m3",
+      "dimensions": 1024,
+      "model_load_ms": 67095,
+      "index_build_ms": 35439,
+      "indexed_chunks": 19,
+      "index_disk_bytes": 303686,
+      "traced_python_peak_memory_mb": 430.62,
+      "memory_note": "Python allocator peak; native model/runtime memory is excluded.",
+      "rss_before_mb": 305.04,
+      "rss_after_model_load_mb": 1106.04,
+      "rss_after_evaluation_mb": 2262.21,
+      "rss_note": "Resident-set snapshots include the Python runtime and shared native allocations; compare directionally on the recorded machine.",
+      "input_tokens": 0,
+      "estimated_provider_cost_usd": 0.0,
+      "quality_metrics": {
+        "dense": {
+          "overall": {
+            "cases": 50,
+            "answerable_cases": 46,
+            "unanswerable_cases": 4,
+            "mrr_at_5": 0.9638,
+            "recall_at_5": 0.9565,
+            "ndcg_at_5": 0.9394,
+            "no_answer_accuracy": 0.5,
+            "p50_retrieval_ms": 340,
+            "p95_retrieval_ms": 591,
+            "p50_total_ms": 348,
+            "p95_total_ms": 603
+          },
+          "by_split": {
+            "development": {
+              "cases": 30,
+              "answerable_cases": 28,
+              "unanswerable_cases": 2,
+              "mrr_at_5": 0.9821,
+              "recall_at_5": 0.9643,
+              "ndcg_at_5": 0.9592,
+              "no_answer_accuracy": 0.5,
+              "p50_retrieval_ms": 313,
+              "p95_retrieval_ms": 568,
+              "p50_total_ms": 328,
+              "p95_total_ms": 575
+            },
+            "held_out": {
+              "cases": 20,
+              "answerable_cases": 18,
+              "unanswerable_cases": 2,
+              "mrr_at_5": 0.9352,
+              "recall_at_5": 0.9444,
+              "ndcg_at_5": 0.9087,
+              "no_answer_accuracy": 0.5,
+              "p50_retrieval_ms": 393,
+              "p95_retrieval_ms": 648,
+              "p50_total_ms": 400,
+              "p95_total_ms": 653
+            }
+          },
+          "by_category": {
+            "boundary": {
+              "cases": 9,
+              "answerable_cases": 9,
+              "unanswerable_cases": 0,
+              "mrr_at_5": 1.0,
+              "recall_at_5": 1.0,
+              "ndcg_at_5": 1.0,
+              "no_answer_accuracy": 0.0,
+              "p50_retrieval_ms": 376,
+              "p95_retrieval_ms": 591,
+              "p50_total_ms": 382,
+              "p95_total_ms": 603
+            },
+            "collection_filter": {
+              "cases": 2,
+              "answerable_cases": 0,
+              "unanswerable_cases": 2,
+              "mrr_at_5": 0.0,
+              "recall_at_5": 0.0,
+              "ndcg_at_5": 0.0,
+              "no_answer_accuracy": 0.5,
+              "p50_retrieval_ms": 404,
+              "p95_retrieval_ms": 434,
+              "p50_total_ms": 421,
+              "p95_total_ms": 460
+            },
+            "exact": {
+              "cases": 17,
+              "answerable_cases": 17,
+              "unanswerable_cases": 0,
+              "mrr_at_5": 0.9706,
+              "recall_at_5": 0.9706,
+              "ndcg_at_5": 0.9555,
+              "no_answer_accuracy": 0.0,
+              "p50_retrieval_ms": 308,
+              "p95_retrieval_ms": 576,
+              "p50_total_ms": 313,
+              "p95_total_ms": 580
+            },
+            "multi_document": {
+              "cases": 4,
+              "answerable_cases": 4,
+              "unanswerable_cases": 0,
+              "mrr_at_5": 1.0,
+              "recall_at_5": 0.625,
+              "ndcg_at_5": 0.7098,
+              "no_answer_accuracy": 0.0,
+              "p50_retrieval_ms": 443,
+              "p95_retrieval_ms": 1046,
+              "p50_total_ms": 454,
+              "p95_total_ms": 1054
+            },
+            "paraphrase": {
+              "cases": 14,
+              "answerable_cases": 14,
+              "unanswerable_cases": 0,
+              "mrr_at_5": 0.9167,
+              "recall_at_5": 1.0,
+              "ndcg_at_5": 0.9379,
+              "no_answer_accuracy": 0.0,
+              "p50_retrieval_ms": 364,
+              "p95_retrieval_ms": 648,
+              "p50_total_ms": 372,
+              "p95_total_ms": 653
+            },
+            "table": {
+              "cases": 2,
+              "answerable_cases": 2,
+              "unanswerable_cases": 0,
+              "mrr_at_5": 1.0,
+              "recall_at_5": 1.0,
+              "ndcg_at_5": 1.0,
+              "no_answer_accuracy": 0.0,
+              "p50_retrieval_ms": 356,
+              "p95_retrieval_ms": 423,
+              "p50_total_ms": 363,
+              "p95_total_ms": 430
+            },
+            "unanswerable": {
+              "cases": 2,
+              "answerable_cases": 0,
+              "unanswerable_cases": 2,
+              "mrr_at_5": 0.0,
+              "recall_at_5": 0.0,
+              "ndcg_at_5": 0.0,
+              "no_answer_accuracy": 0.5,
+              "p50_retrieval_ms": 431,
+              "p95_retrieval_ms": 546,
+              "p50_total_ms": 448,
+              "p95_total_ms": 571
+            }
+          }
+        },
+        "hybrid": {
+          "overall": {
+            "cases": 50,
+            "answerable_cases": 46,
+            "unanswerable_cases": 4,
+            "mrr_at_5": 0.9891,
+            "recall_at_5": 1.0,
+            "ndcg_at_5": 0.9826,
+            "no_answer_accuracy": 0.25,
+            "p50_retrieval_ms": 413,
+            "p95_retrieval_ms": 1199,
+            "p50_total_ms": 423,
+            "p95_total_ms": 1207
+          },
+          "by_split": {
+            "development": {
+              "cases": 30,
+              "answerable_cases": 28,
+              "unanswerable_cases": 2,
+              "mrr_at_5": 1.0,
+              "recall_at_5": 1.0,
+              "ndcg_at_5": 0.9918,
+              "no_answer_accuracy": 0.5,
+              "p50_retrieval_ms": 398,
+              "p95_retrieval_ms": 995,
+              "p50_total_ms": 408,
+              "p95_total_ms": 1003
+            },
+            "held_out": {
+              "cases": 20,
+              "answerable_cases": 18,
+              "unanswerable_cases": 2,
+              "mrr_at_5": 0.9722,
+              "recall_at_5": 1.0,
+              "ndcg_at_5": 0.9682,
+              "no_answer_accuracy": 0.0,
+              "p50_retrieval_ms": 416,
+              "p95_retrieval_ms": 1389,
+              "p50_total_ms": 426,
+              "p95_total_ms": 1400
+            }
+          },
+          "by_category": {
+            "boundary": {
+              "cases": 9,
+              "answerable_cases": 9,
+              "unanswerable_cases": 0,
+              "mrr_at_5": 1.0,
+              "recall_at_5": 1.0,
+              "ndcg_at_5": 1.0,
+              "no_answer_accuracy": 0.0,
+              "p50_retrieval_ms": 381,
+              "p95_retrieval_ms": 518,
+              "p50_total_ms": 390,
+              "p95_total_ms": 525
+            },
+            "collection_filter": {
+              "cases": 2,
+              "answerable_cases": 0,
+              "unanswerable_cases": 2,
+              "mrr_at_5": 0.0,
+              "recall_at_5": 0.0,
+              "ndcg_at_5": 0.0,
+              "no_answer_accuracy": 0.0,
+              "p50_retrieval_ms": 614,
+              "p95_retrieval_ms": 732,
+              "p50_total_ms": 624,
+              "p95_total_ms": 740
+            },
+            "exact": {
+              "cases": 17,
+              "answerable_cases": 17,
+              "unanswerable_cases": 0,
+              "mrr_at_5": 1.0,
+              "recall_at_5": 1.0,
+              "ndcg_at_5": 0.9953,
+              "no_answer_accuracy": 0.0,
+              "p50_retrieval_ms": 392,
+              "p95_retrieval_ms": 1389,
+              "p50_total_ms": 402,
+              "p95_total_ms": 1400
+            },
+            "multi_document": {
+              "cases": 4,
+              "answerable_cases": 4,
+              "unanswerable_cases": 0,
+              "mrr_at_5": 1.0,
+              "recall_at_5": 1.0,
+              "ndcg_at_5": 0.9118,
+              "no_answer_accuracy": 0.0,
+              "p50_retrieval_ms": 595,
+              "p95_retrieval_ms": 689,
+              "p50_total_ms": 606,
+              "p95_total_ms": 701
+            },
+            "paraphrase": {
+              "cases": 14,
+              "answerable_cases": 14,
+              "unanswerable_cases": 0,
+              "mrr_at_5": 0.9643,
+              "recall_at_5": 1.0,
+              "ndcg_at_5": 0.9736,
+              "no_answer_accuracy": 0.0,
+              "p50_retrieval_ms": 378,
+              "p95_retrieval_ms": 2379,
+              "p50_total_ms": 387,
+              "p95_total_ms": 2386
+            },
+            "table": {
+              "cases": 2,
+              "answerable_cases": 2,
+              "unanswerable_cases": 0,
+              "mrr_at_5": 1.0,
+              "recall_at_5": 1.0,
+              "ndcg_at_5": 1.0,
+              "no_answer_accuracy": 0.0,
+              "p50_retrieval_ms": 418,
+              "p95_retrieval_ms": 421,
+              "p50_total_ms": 428,
+              "p95_total_ms": 432
+            },
+            "unanswerable": {
+              "cases": 2,
+              "answerable_cases": 0,
+              "unanswerable_cases": 2,
+              "mrr_at_5": 0.0,
+              "recall_at_5": 0.0,
+              "ndcg_at_5": 0.0,
+              "no_answer_accuracy": 0.5,
+              "p50_retrieval_ms": 674,
+              "p95_retrieval_ms": 930,
+              "p50_total_ms": 693,
+              "p95_total_ms": 958
+            }
+          }
+        }
+      }
+    },
+    "openai-large-1024": {
+      "status": "credential_required",
+      "provider": "openai-compatible",
+      "model": "text-embedding-3-large",
+      "dimensions": 1024,
+      "credential_env": "ATLAS_EMBEDDING_API_KEY",
+      "credential_setup": "Set ATLAS_EMBEDDING_API_KEY in the process environment; do not commit it.",
+      "command": "python -m app.embedding_benchmark --candidates openai-large-1024",
+      "quality_metrics": null,
+      "estimated_provider_cost_usd": null
+    }
+  }
+}

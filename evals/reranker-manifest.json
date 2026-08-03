@@ -1,0 +1,44 @@
+{
+  "experiment": "atlas-reranker-bakeoff",
+  "version": "2026-07-30",
+  "controlled_variables": {
+    "chunking_profile": "fixed",
+    "embedding_provider": "fastembed",
+    "embedding_model": "BAAI/bge-small-en-v1.5",
+    "top_k": 5,
+    "candidate_k": 24,
+    "generation_provider": "extractive"
+  },
+  "candidates": {
+    "none": {
+      "retrieval_profile": "hybrid",
+      "provider": null,
+      "model": null,
+      "model_artifact_gb": 0.0
+    },
+    "minilm-cross-encoder": {
+      "retrieval_profile": "hybrid-reranked",
+      "provider": "cross-encoder",
+      "model": "Xenova/ms-marco-MiniLM-L-6-v2",
+      "model_artifact_gb": 0.08
+    },
+    "bge-cross-encoder": {
+      "retrieval_profile": "hybrid-reranked",
+      "provider": "cross-encoder",
+      "model": "BAAI/bge-reranker-base",
+      "model_artifact_gb": 1.04
+    },
+    "colbert": {
+      "retrieval_profile": "hybrid-reranked",
+      "provider": "colbert",
+      "model": "answerdotai/answerai-colbert-small-v1",
+      "model_artifact_gb": 0.13
+    }
+  },
+  "adoption_gate": "Promote a reranker only when held-out MRR or nDCG improves without reducing recall; any candidate above twice baseline p95 latency stays optional.",
+  "notes": [
+    "Every candidate uses the same documents, cases, embedding model, hybrid candidates, top_k, and candidate_k.",
+    "Model initialization is warmed once and recorded separately from steady-state evaluation latency.",
+    "The no-reranker profile returns the first five hybrid fusion results from the same 24-candidate prefetch."
+  ]
+}

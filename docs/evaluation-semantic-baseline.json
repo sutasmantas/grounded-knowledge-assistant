@@ -1,0 +1,30 @@
+{
+  "dataset": "evals/golden.jsonl",
+  "embedding_provider": "fastembed:BAAI/bge-small-en-v1.5",
+  "reranker_provider": "fastembed:answerdotai/answerai-colbert-small-v1",
+  "purpose": "Local semantic pipeline smoke benchmark on the fictional corpus; not a claim about external corpora.",
+  "results": {
+    "dense": {
+      "answerable_cases": 8,
+      "mrr_at_5": 1.0,
+      "recall_at_5": 1.0,
+      "no_answer_accuracy": 1.0,
+      "median_retrieval_ms": 9
+    },
+    "hybrid": {
+      "answerable_cases": 8,
+      "mrr_at_5": 1.0,
+      "recall_at_5": 1.0,
+      "no_answer_accuracy": 1.0,
+      "median_retrieval_ms": 14
+    },
+    "hybrid-reranked": {
+      "answerable_cases": 8,
+      "mrr_at_5": 1.0,
+      "recall_at_5": 1.0,
+      "no_answer_accuracy": 1.0,
+      "median_retrieval_ms": 627
+    }
+  },
+  "latency_note": "Timing is machine- and cache-dependent; reranking was measured after model download."
+}

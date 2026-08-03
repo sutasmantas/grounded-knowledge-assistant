@@ -1,0 +1,31 @@
+{
+  "runner": "llama.cpp OpenAI-compatible server",
+  "runner_revision": "f2b52a87e82fa461191565a19d4ef9fd8b8fbd87",
+  "container_image": "ghcr.io/ggml-org/llama.cpp@sha256:9e60dd363798776f451bcca97f22f5d75579480e53b0b46303d061a69ceea4df",
+  "container_image_id": "sha256:9e60dd363798776f451bcca97f22f5d75579480e53b0b46303d061a69ceea4df",
+  "model": "ggml-org/gemma-3-1b-it-GGUF",
+  "model_alias": "gemma-3-1b-it",
+  "model_format": "GGUF Q4_K_M",
+  "model_parameters": 999885952,
+  "model_file_bytes": 799525120,
+  "limits": {
+    "cpus": 4,
+    "memory_gib": 6,
+    "context_tokens": 8192,
+    "parallel_slots": 1,
+    "generation_tokens": 256
+  },
+  "sample": {
+    "prompt_tokens": 993,
+    "completion_tokens": 256,
+    "peak_cpu_percent": 407.51,
+    "peak_memory_mb": 299.9
+  },
+  "held_out_run": {
+    "cases": 20,
+    "observed_memory_mb": 960.6
+  },
+  "peak_memory_mb": 960.6,
+  "measurement_command": "docker stats atlas-p2-llama-eval --no-stream during the 20-case held-out run; a 200ms sample was also taken during the bounded 993-input/256-output-token request",
+  "scope_note": "Docker-reported resident container memory reached 960.6 MiB during the full held-out run. Model file bytes are recorded separately because llama.cpp memory-maps weights."
+}

@@ -1,0 +1,84 @@
+/* Atlas product-local tokens.
+ *
+ * Values come from docs/ui2-atlas-shell.md. This is deliberately not a shared
+ * portfolio theme: the five products must not look like recolours of one
+ * dashboard, so each owns its own token file.
+ */
+
+:root {
+  /* Colour — warm light neutral canvas, ink violet accent */
+  --atlas-canvas: #faf8f5;
+  --atlas-surface: #ffffff;
+  --atlas-surface-sunken: #f2efea;
+  --atlas-border-quiet: #e5e0d8;
+  --atlas-border-strong: #cfc8bc;
+  /* Every ink value clears WCAG 2.2 AA 4.5:1 against *every* background it can
+   * land on: surface, canvas, sunken, and the accent, flag and tag washes.
+   * Two rounds of axe were needed. The first draft used #948d82 for subtle
+   * (3.29:1 on white); the second used #726c62, which still failed at 4.43:1
+   * on the violet active-card wash — a background the first check omitted.
+   * "Subtle" is not a licence to fail contrast. */
+  --atlas-ink: #1c1a17;
+  --atlas-ink-muted: #6b655c; /* worst case 4.92 */
+  --atlas-ink-subtle: #67615a; /* worst case 5.22 */
+  --atlas-accent: #4c3fbf; /* 7.58 / 7.15 / 6.61 */
+  --atlas-accent-hover: #3e33a3;
+  --atlas-accent-wash: #eeebfb;
+  --atlas-positive: #1a684e; /* darkened for the tag background too */
+  --atlas-warning: #8a5a00; /* 5.93 / 5.59 / 5.17 */
+  --atlas-danger: #a33528;
+  --atlas-flag-ink: #8a5a00;
+  --atlas-flag-wash: #fbf3e2;
+
+  /* Typography — serif is reserved for long-form answer hierarchy */
+  --atlas-font-ui: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --atlas-font-answer: "Source Serif 4", Georgia, serif;
+  --atlas-font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --atlas-text-xs: 0.75rem;
+  --atlas-text-sm: 0.8125rem;
+  --atlas-text-control: 0.875rem;
+  --atlas-text-body: 1rem;
+  --atlas-text-lg: 1.125rem;
+  --atlas-text-xl: 1.375rem;
+  --atlas-text-2xl: 1.75rem;
+  --atlas-leading-tight: 1.25;
+  --atlas-leading-body: 1.6;
+
+  /* Space */
+  --atlas-space-1: 4px;
+  --atlas-space-2: 8px;
+  --atlas-space-3: 12px;
+  --atlas-space-4: 16px;
+  --atlas-space-5: 20px;
+  --atlas-space-6: 24px;
+  --atlas-space-8: 32px;
+  --atlas-space-10: 40px;
+  --atlas-space-14: 56px;
+
+  /* Geometry — moderate radius, quiet dividers rather than shadow */
+  --atlas-radius-control: 4px;
+  --atlas-radius-panel: 8px;
+  --atlas-radius-card: 12px;
+  --atlas-radius-pill: 999px;
+
+  /* Elevation — level 2 is reserved for drawers and popovers */
+  --atlas-elevation-1: 0 1px 2px rgb(28 26 23 / 6%);
+  --atlas-elevation-2: 0 8px 24px rgb(28 26 23 / 10%);
+
+  /* Motion */
+  --atlas-motion-state: 120ms ease-out;
+  --atlas-motion-panel: 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* Layout */
+  --atlas-rail-width: 300px;
+  --atlas-rail-collapsed: 48px;
+  --atlas-evidence-width: 400px;
+  --atlas-header-height: 56px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --atlas-motion-state: 0ms;
+    --atlas-motion-panel: 0ms;
+  }
+}

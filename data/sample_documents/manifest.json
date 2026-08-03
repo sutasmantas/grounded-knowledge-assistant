@@ -1,0 +1,32 @@
+[
+  {
+    "file": "enterprise_contract_policy.md",
+    "title": "Enterprise Contract Policy",
+    "collection": "Customer contracts"
+  },
+  {
+    "file": "account_management_handbook.md",
+    "title": "Account Management Handbook",
+    "collection": "Customer contracts"
+  },
+  {
+    "file": "billing_close_procedure.md",
+    "title": "Billing Close Procedure",
+    "collection": "Billing & renewals"
+  },
+  {
+    "file": "customer_refund_policy.md",
+    "title": "Customer Refund Policy",
+    "collection": "Billing & renewals"
+  },
+  {
+    "file": "information_security_standard.md",
+    "title": "Information Security Standard",
+    "collection": "Security & compliance"
+  },
+  {
+    "file": "people_operations_handbook.md",
+    "title": "People Operations Handbook",
+    "collection": "People operations"
+  }
+]

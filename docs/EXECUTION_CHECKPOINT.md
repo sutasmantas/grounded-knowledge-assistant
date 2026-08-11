@@ -10,9 +10,13 @@ current phase, the next action, and whether a transition is allowed.
 ## Current decision
 
 UI2 and P2 production adaptation are complete. P2 was merged locally to
-`main` at `ee8b420`; Atlas Phase C remains paused. P2 was not Phase C and
-included no frontend polish. The exact cross-portfolio next action is P3 Relay
-MCP in Relay's own isolated worktree.
+`main` at `ee8b420`; Atlas Phase C remains paused. The public-facing workspace
+refresh is also complete at local `main` commit `a33e3e8`: Atlas now has a
+credential-free GitHub Pages interface, current answer/library screenshots,
+and client-facing README copy. Public `main` is the separate root snapshot
+`d642119`; Pages run `30843739208`, CI run `30843662278`, the local frontend
+build, and deployed desktop/mobile browser checks all passed. No further Atlas
+phase is authorized by this checkpoint.
 
 The pre-code GitHub comparison gate is `PASS`; see
 `docs/P2_GITHUB_REUSE_AUDIT.md`. The pinned decisions are: refit Atlas's frozen
@@ -61,9 +65,11 @@ ignored in OIDC mode. P2 is complete; no frontend polish was started.
   accounting, connector ingestion spans, the Phase B test suite, and the
   connector and observability reference documentation
 - Expected `main` state: clean and containing application checkpoint `a7e721a`,
-  P2 merge `ee8b420`, and this publication-boundary checkpoint. Public
+  P2 merge `ee8b420`, no-login workspace publication commit `a33e3e8`, and
+  this checkpoint update.
+  Public
   `origin/main` is intentionally a separate root
-  publication snapshot at `b53722b`. The histories diverge by design; never
+  publication snapshot at `d642119`. The histories diverge by design; never
   merge, rebase, or directly push local `main` into the public snapshot.
 
 Run before resuming:
@@ -821,3 +827,31 @@ versions hidden.
 - Exact next cross-portfolio action: begin P3 Relay MCP server exposure in
   Relay's own isolated worktree. ContextSidecar is complete elsewhere and must
   not be reopened.
+
+## Technique-ceiling dossier closure — 2026-08-04
+
+- Research exit gate: `PASS`; Atlas technique experiments remain `PARTIAL`.
+- Isolated worktree: `portfolio_demos/worktrees/atlas_technique_dossier`.
+- Branch: `agent/atlas-technique-dossier`, based on clean Atlas `main` commit
+  `da3dbd18ebc1ef6750c7d1ce9dc817296dab59b3`.
+- Dossier commit: `1246c34a8c2bc48df48b03f1fe4fb92dc4969b95`.
+- Required artifacts: `TECHNIQUE_TAXONOMY.md`, `EVIDENCE_MATRIX.csv`,
+  `GITHUB_IMPLEMENTATION_AUDIT.md`, `BENCHMARK_DESIGN.md`,
+  `RESEARCH_DECISION.md`, and `docs/EXPERTISE_NOTES.md`.
+- Expertise disposition: central card **Match retrieval topology to the
+  question scope** was added to `UPWORK_EXPERTISE_INDEX.md`; visual-parsing and
+  refusal notes explicitly reuse the existing parsing and abstention cards.
+- Verification: all six artifacts exist; the CSV imports as 22 candidates with
+  all required columns and no blank candidate/status/disposition; all eleven
+  systematic evidence rows are `PASS`; `git diff --check` passes. Local
+  evidence references in the dossier resolve. Application tests were not
+  rerun because this slice changes research/checkpoint Markdown and CSV only.
+- Decision: retain fixed sparse/hybrid and routed parsing controls. Admit A0
+  answerability/evidence coverage first; A1 contextual versus late/DOS, A2
+  text versus visual retrieval, and A3 flat/DOS versus hierarchy/graph remain
+  separately gated.
+- Scope stopped before: candidate implementation, benchmark execution, Phase
+  C/D, UI/visual polish, central portfolio site, merge, push, or deployment.
+- Exact next cross-portfolio action: complete the ProofGrid systematic dossier
+  in its own isolated worktree. Do not start Atlas A0 from this checkpoint.
+  ContextSidecar is complete elsewhere and is outside this stream.

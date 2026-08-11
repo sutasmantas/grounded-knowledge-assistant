@@ -5,8 +5,7 @@ Date: 2026-08-04
 This is a research and reuse gate, not permission to integrate code. Repository
 health was read from GitHub's repository, commit, release, and current-issue
 APIs on the date above; runnable surfaces were checked in the pinned README or
-official documentation. License was deliberately not researched, filtered,
-compared, or ranked.
+official documentation.
 
 ## Atlas seams that must be reused
 

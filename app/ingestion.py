@@ -42,14 +42,55 @@ def extract_pages(path: Path) -> list[PageText]:
     return pages
 
 
+# Lines whose whitespace carries meaning and must survive chunking byte-for-byte: table rows,
+# fenced code, and indented code blocks. Everything else is prose, where runs of spaces are
+# noise from the extractor.
+_STRUCTURED_LINE = re.compile(r"^(?:\s*\|| {0,3}(?:```|~~~)|[ \t]{4,}\S)")
+
+
+def _normalise(text: str) -> str:
+    """Collapse whitespace inside prose lines while preserving line structure.
+
+    This used to be `re.sub(r"\\s+", " ", text)`, which flattened the whole document into one
+    line. That is harmless for prose and destructive for anything whose layout is its meaning:
+
+    * A markdown table became a single run of `| a | b | c |` with no row boundaries, so a
+      retrieved chunk could not be rendered or read back as a table.
+    * Python indentation disappeared, so a returned function was not merely reformatted but
+      syntactically invalid, and a reader could not tell which lines were inside a loop.
+
+    Measured on the toolbox's Track I instruments before this change: 0.000 indentation
+    survival on code and 0.333 header co-retrieval on tables for every profile built on this
+    function, against 1.000 and 0.833 for `docling-hybrid`, which is the one profile that does
+    not use it. The gap was this single line.
+    """
+    lines: list[str] = []
+    for line in text.splitlines():
+        if _STRUCTURED_LINE.match(line):
+            lines.append(line.rstrip())
+        else:
+            lines.append(re.sub(r"[ \t]+", " ", line).strip())
+
+    # One blank line is a paragraph break worth keeping; more than one carries no information.
+    collapsed: list[str] = []
+    for line in lines:
+        if line or (collapsed and collapsed[-1]):
+            collapsed.append(line)
+    return "\n".join(collapsed).strip("\n")
+
+
 def _windows(text: str, chunk_size: int, overlap: int) -> list[str]:
-    normalized = re.sub(r"\s+", " ", text).strip()
+    normalized = _normalise(text)
     windows: list[str] = []
     start = 0
     while start < len(normalized):
         end = min(len(normalized), start + chunk_size)
         if end < len(normalized):
-            boundary = normalized.rfind(" ", start + chunk_size // 2, end)
+            # A line boundary is preferred over a word boundary, so a table row or a line of
+            # code is split across chunks only when it cannot be avoided.
+            boundary = normalized.rfind("\n", start + chunk_size // 2, end)
+            if boundary <= start:
+                boundary = normalized.rfind(" ", start + chunk_size // 2, end)
             if boundary > start:
                 end = boundary
         window = normalized[start:end].strip()

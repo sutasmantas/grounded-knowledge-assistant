@@ -855,3 +855,28 @@ versions hidden.
 - Exact next cross-portfolio action: complete the ProofGrid systematic dossier
   in its own isolated worktree. Do not start Atlas A0 from this checkpoint.
   ContextSidecar is complete elsewhere and is outside this stream.
+
+## Public dependency-maintenance closure — 2026-08-12
+
+- Scope: standalone maintenance slice only; no Atlas experiment phase or local
+  integration branch was advanced.
+- Worktree: detached `portfolio_demos/worktrees/atlas_dependabot`, created from
+  public `origin/main` at `d222cf1810581d77e0ff9b3f8a0ca8ebe3ff2698`.
+- Dependabot: public `2cf06be75d9afcf2b487c5c5e797976f238577af`
+  adds grouped, rate-limited updates for the repository's GitHub Actions, pip,
+  and Docker inputs. GitHub accepted the file and opened update PRs #1-#4;
+  none was merged by this slice.
+- Regression exposed: the push repeated CI failure `31576368109` from the
+  prior public head. Structure preservation allowed Markdown headings into the
+  extractive answer, and semantic evaluation counted `## Refund routing` as an
+  uncited factual claim (`citation_completeness=0.75`).
+- Fix: public `fea155490d4915d46dd186d22904e2444ed4f78a` excludes
+  formatting-only Markdown headings from the claim set. The existing
+  completeness assertion now becomes load-bearing and an explicit assertion
+  prevents headings from re-entering scored statements.
+- Verification: focused Ruff and all 4 semantic-evaluation tests pass locally;
+  hosted CI `31611939352`, Frontend `31611939317`, and browser-workspace deploy
+  `31611939402` all pass at `fea1554`.
+- Exact next action: keep the four updater PRs open for separate dependency
+  review. Do not merge them as part of this maintenance checkpoint. Continue
+  the central toolbox Track I equation run.

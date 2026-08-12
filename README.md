@@ -1,5 +1,7 @@
 # Atlas Knowledge
 
+**Verification:** [claim-to-artifact map and rerun commands](https://sutasmantas.github.io/evidence/#atlas) · [machine-readable receipt](https://sutasmantas.github.io/evidence/receipt.json)
+
 [![CI](https://github.com/sutasmantas/grounded-knowledge-assistant/actions/workflows/ci.yml/badge.svg)](https://github.com/sutasmantas/grounded-knowledge-assistant/actions/workflows/ci.yml)
 [![Python 3.11](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)](pyproject.toml)
 [![MIT license](https://img.shields.io/badge/license-MIT-0B7285)](LICENSE)

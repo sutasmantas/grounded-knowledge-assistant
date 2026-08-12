@@ -1,5 +1,7 @@
 # Atlas technique decisions
 
+**Verification:** [claim-to-artifact map and rerun commands](https://sutasmantas.github.io/evidence/#atlas) · [machine-readable receipt](https://sutasmantas.github.io/evidence/receipt.json)
+
 Date: 2026-08-04
 
 ## Match retrieval topology to the question scope

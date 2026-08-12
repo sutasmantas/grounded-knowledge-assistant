@@ -17,6 +17,7 @@ from app.service import KnowledgeService
 
 DEFAULT_MANIFEST = PROJECT_ROOT / "evals" / "semantic-evaluation-manifest.json"
 CITATION_PATTERN = re.compile(r"\[(\d+)]")
+MARKDOWN_HEADING_PATTERN = re.compile(r"^\s{0,3}#{1,6}\s+")
 
 
 class SemanticJudge(Protocol):
@@ -63,6 +64,12 @@ def _statements(answer: str) -> list[CitedStatement]:
     body = answer.removeprefix("Based on the indexed policies:").strip()
     statements: list[CitedStatement] = []
     for paragraph in (part.strip() for part in body.split("\n\n")):
+        claim_lines = [
+            line
+            for line in paragraph.splitlines()
+            if not MARKDOWN_HEADING_PATTERN.match(line)
+        ]
+        paragraph = "\n".join(claim_lines).strip()
         if not paragraph:
             continue
         citations = tuple(int(rank) for rank in CITATION_PATTERN.findall(paragraph))

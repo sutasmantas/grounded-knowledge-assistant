@@ -64,6 +64,10 @@ def test_semantic_evaluation_checks_claims_against_cited_passages(
     assert aggregate["exact_citation_support"] == 1.0
     assert aggregate["mean_semantic_citation_support"] == 1.0
     assert rows[0]["statements"]
+    assert all(
+        not statement["text"].lstrip().startswith("#")
+        for statement in rows[0]["statements"]
+    )
 
 
 def test_semantic_evaluation_counts_selected_cases(

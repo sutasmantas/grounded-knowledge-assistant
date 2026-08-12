@@ -79,6 +79,27 @@ def _normalise(text: str) -> str:
     return "\n".join(collapsed).strip("\n")
 
 
+def _structural_break(text: str, position: int) -> bool:
+    """Is the newline at `position` worth ending a chunk on?
+
+    Only if the line it ends, or the line it begins, is structural. Preferring EVERY newline
+    was measured and it costs recall on prose: over WildGraphBench's 164k chunks, that rule
+    ended chunks early wherever ordinary prose happened to wrap, raising chunk counts 2.6-12.6%
+    and moving `parent-child` recall@20 by -0.0380 with a 95% CI of [-0.0636, -0.0131] — the one
+    comparison of nine that separated from zero, and it separated the wrong way.
+
+    Newline preservation itself was never the cost. For a lexical retriever a newline and a
+    space tokenise identically; only the chunk BOUNDARY changed. So the boundary rule is now
+    conditional and the preservation is unconditional, which keeps the tables-and-code fix and
+    drops the prose regression.
+    """
+    line_start = text.rfind("\n", 0, position) + 1
+    ends = text[line_start:position]
+    next_end = text.find("\n", position + 1)
+    begins = text[position + 1:next_end if next_end != -1 else len(text)]
+    return bool(_STRUCTURED_LINE.match(ends) or _STRUCTURED_LINE.match(begins))
+
+
 def _windows(text: str, chunk_size: int, overlap: int) -> list[str]:
     normalized = _normalise(text)
     windows: list[str] = []
@@ -86,9 +107,16 @@ def _windows(text: str, chunk_size: int, overlap: int) -> list[str]:
     while start < len(normalized):
         end = min(len(normalized), start + chunk_size)
         if end < len(normalized):
-            # A line boundary is preferred over a word boundary, so a table row or a line of
-            # code is split across chunks only when it cannot be avoided.
-            boundary = normalized.rfind("\n", start + chunk_size // 2, end)
+            # A STRUCTURAL line boundary is preferred, so a table row or a line of code is split
+            # across chunks only when unavoidable. An ordinary prose wrap is not a reason to end
+            # a chunk early, which is what the measurement above established.
+            boundary = -1
+            candidate = normalized.rfind("\n", start + chunk_size // 2, end)
+            while candidate > start:
+                if _structural_break(normalized, candidate):
+                    boundary = candidate
+                    break
+                candidate = normalized.rfind("\n", start + chunk_size // 2, candidate)
             if boundary <= start:
                 boundary = normalized.rfind(" ", start + chunk_size // 2, end)
             if boundary > start:

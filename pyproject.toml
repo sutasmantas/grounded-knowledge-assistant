@@ -32,8 +32,8 @@ dev = [
   # psutil is imported by the embedding benchmark module that the test suite
   # collects, so the default CI install must provide it.
   "psutil>=7.2,<8",
-  "pytest>=8.4,<9",
-  "pytest-cov>=6.2,<7",
+  "pytest>=8.4,<10",
+  "pytest-cov>=6.2,<8",
   "ruff>=0.12,<1",
 ]
 parsing-benchmark = [
@@ -47,7 +47,7 @@ embedding-benchmark = [
 ]
 semantic-eval = [
   "torch>=2.13,<3",
-  "transformers>=4.57,<5",
+  "transformers>=4.57,<6",
 ]
 security-scan = [
   "garak>=0.15,<1",
